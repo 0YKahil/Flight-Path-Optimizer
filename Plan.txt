@@ -1,0 +1,33 @@
++------------------------------------+
+| Start                              |
++------------------------------------+
+|                                    |
+| Fetch airport data from API        |
+| (OurAirports.com) and filter       |
+| out heliports, generate file with  |
+| data                               |
+|                                    |
++------------------------------------+
+|                                    |
+| Calculate sub max range distances  |
+|  between all pairs of airports     |
+|                                    |
++------------------------------------+
+|                                    |
+| Create a graph with airports as    |
+| nodes and distances as edges       |
+|                                    |
++------------------------------------+
+|                                    |
+| Find shortest path using Dijkstra's|
+| algorithm                          |
+|                                    |
++------------------------------------+
+|                                    |
+| Output fastest path to user        |
+|                                    |
++------------------------------------+
+| End                                |
++------------------------------------+
+
+
