@@ -23,7 +23,7 @@ class Airport {
         double longitude;   // Longitude of airport
 
         // Constructor for Airport
-        Airport(const std::string& id, const std::string& nm, const std::string& t, 
+        Airport(const std::string& code, const std::string& name, const std::string& t, 
                 double lat, double lon);
         
 
@@ -34,7 +34,10 @@ class Airport {
          * 
          * @return: the distance from this airport to other airport in nautical miles
          */
-        double distanceTo(const Airport& other) const;   
+        double distanceTo(const Airport& other) const;  
+
+
+        
 };
 
 
