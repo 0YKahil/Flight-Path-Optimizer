@@ -5,11 +5,13 @@ Airport Route planner calculates the shortest route for a limited plane's range 
 
 This Project Uses the Cessna 172 as the main plane of choice but can be easily modified to accommodate other planes
 
+While the max range is 650nm, a realsitic range for the Cesna 172 is 400nm (I got this number from a licensed pilot), so the program will set a 400nm limit which can be modified if needed.
+
 ## Features
 
 - Fetches Airport location data from OurAirports api
 - parses and filters data using a python script to only include
-small, medium, and large airports (no heliports or seaports)
+small, medium, and large airports (no heliports or seaports) and restrict to region of choice
 - Calculates the circle distance between all the pairs of airports
 using the Haversine formula https://en.wikipedia.org/wiki/Haversine_formula
 - Converts calculations into an adjacency list representing a graph with airports as nodes and **Reachable** distances as the edges
