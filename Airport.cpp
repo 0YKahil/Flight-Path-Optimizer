@@ -41,3 +41,7 @@ Airport::Airport(const std::string& code, const std::string& name, const std::st
 double Airport::distanceTo(const Airport& other) const {
     return haversine(latitude, longitude, other.latitude, other.longitude);
 }
+
+bool Airport::operator==(const Airport& other) const {
+    return this->code == other.code;
+}

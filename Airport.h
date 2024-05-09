@@ -36,8 +36,10 @@ class Airport {
          */
         double distanceTo(const Airport& other) const;  
 
-
+        // Compare airports by their identifying code
+        bool operator==(const Airport& other) const;
         
+
 };
 
 

@@ -9,6 +9,11 @@
 #include "catch.hpp"
 #include "Airport.h"
 
+double yowLat = 45.3225;
+double yowLon = -75.6692;
+double jfkLat = 40.6413;
+double jfkLon = -73.7781;
+
 TEST_CASE("Test Constructor") {
     Airport a1 = Airport("YYK", "Vancouver International", "large_airport", -30.14, 20.15);
     REQUIRE(a1.latitude == -30.14);
@@ -40,13 +45,17 @@ TEST_CASE("Test Haversine") {
 
 
 TEST_CASE("Test distanceTo method") {
-    double yowLat = 45.3225;
-    double yowLon = -75.6692;
-    double jfkLat = 40.6413;
-    double jfkLon = -73.7781;
     Airport yow = Airport("YOW", "Ottawa international", "large_airport", yowLat, yowLon);
     Airport jfk = Airport("JFK", "John F Kennedy international", "large_airport", jfkLat, jfkLon);
     REQUIRE(jfk.distanceTo(yow) == yow.distanceTo(jfk));
     REQUIRE(yow.distanceTo(jfk) > 290);
     REQUIRE(yow.distanceTo(jfk) < 300);
+}
+
+TEST_CASE("Test comparing operator") {
+    Airport yow1 = Airport("YOW", "Ottawa Macdonald international", "large_airport", yowLat, yowLon);
+    Airport yow = Airport("YOW", "Ottawa international", "large_airport", yowLat, yowLon);
+    Airport jfk = Airport("JFK", "John F Kennedy international", "large_airport", jfkLat, jfkLon);
+    REQUIRE_FALSE(yow == jfk);
+    REQUIRE(yow1 == yow);
 }
