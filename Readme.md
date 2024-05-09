@@ -5,7 +5,7 @@ Flight Path Optimizer calculates the shortest route for a limited plane's range 
 
 This Project Uses the Cessna 172 as the main plane of choice but can be easily modified to accommodate other planes
 
-While the max range is 650nm, a realsitic range for the Cesna 172 is 400nm (I got this number from a licensed pilot), so the program will set a 400nm limit which can be modified if needed.
+While the max range is 650nm, a realsitic range for the Cesna 172 is 400nm (number obtained from a licensed pilot), so the program will set a 400nm limit which can be modified if needed.
 
 ## Features
 
