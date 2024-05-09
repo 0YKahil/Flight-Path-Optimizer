@@ -7,7 +7,6 @@
  * point and destination airport.
  */
 
-
 int main() {
 
     return 0;

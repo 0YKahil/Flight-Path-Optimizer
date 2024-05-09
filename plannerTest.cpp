@@ -5,4 +5,3 @@
  * Tests for flightPathOptimizer.cpp
  */
 
-
