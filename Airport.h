@@ -26,6 +26,8 @@ class Airport {
         Airport(const std::string& code, const std::string& name, const std::string& t, 
                 double lat, double lon);
         
+        // Empty constructor with no values
+        Airport();
 
         /*
          * Calculates the great circle distance (aka orthodromic distance) 

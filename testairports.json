@@ -1,0 +1,92 @@
+[
+    {
+        "ident": "KJFK",
+        "name": "John F Kennedy International Airport",
+        "type": "large_airport",
+        "latitude": "40.639801",
+        "longitude": "-73.7789",
+        "continent": "NA",
+        "iata": "JFK",
+        "icao": "KJFK"
+    },
+    {
+        "ident": "CYOW",
+        "name": "Ottawa Macdonald-Cartier International Airport",
+        "type": "large_airport",
+        "latitude": "45.3224983215332",
+        "longitude": "-75.66919708251953",
+        "continent": "NA",
+        "iata": "YOW",
+        "icao": "CYOW"
+    },
+    {
+        "ident": "KMDW",
+        "name": "Chicago Midway International Airport",
+        "type": "large_airport",
+        "latitude": "41.785999",
+        "longitude": "-87.752403",
+        "continent": "NA",
+        "iata": "MDW",
+        "icao": "KMDW"
+    },
+    {
+        "ident": "CYYZ",
+        "name": "Lester B. Pearson International Airport",
+        "type": "large_airport",
+        "latitude": "43.6772003174",
+        "longitude": "-79.63059997559999",
+        "continent": "NA",
+        "iata": "YYZ",
+        "icao": "CYYZ"
+    },
+    {
+        "ident": "CYUL",
+        "name": "Montreal / Pierre Elliott Trudeau International Airport",
+        "type": "large_airport",
+        "latitude": "45.4706001282",
+        "longitude": "-73.7407989502",
+        "continent": "NA",
+        "iata": "YUL",
+        "icao": "CYUL"
+    },
+    {
+        "ident": "KCLE",
+        "name": "Cleveland Hopkins International Airport",
+        "type": "large_airport",
+        "latitude": "41.4117012024",
+        "longitude": "-81.8498001099",
+        "continent": "NA",
+        "iata": "CLE",
+        "icao": "KCLE"
+    },
+    {
+        "ident": "KPHL",
+        "name": "Philadelphia International Airport",
+        "type": "large_airport",
+        "latitude": "39.87189865112305",
+        "longitude": "-75.24109649658203",
+        "continent": "NA",
+        "iata": "PHL",
+        "icao": "KPHL"
+    },
+    {
+        "ident": "KBOS",
+        "name": "Logan International Airport",
+        "type": "large_airport",
+        "latitude": "42.3643",
+        "longitude": "-71.005203",
+        "continent": "NA",
+        "iata": "BOS",
+        "icao": "KBOS"
+    },
+    {
+        "ident": "KPHL",
+        "name": "Philadelphia International Airport",
+        "type": "large_airport",
+        "latitude": "39.87189865112305",
+        "longitude": "-75.24109649658203",
+        "continent": "NA",
+        "iata": "PHL",
+        "icao": "KPHL"
+    }
+]

@@ -36,6 +36,7 @@ Airport::Airport(const std::string& code, const std::string& name, const std::st
                 double lat, double lon)
                 : code(code), name(name), type(t), latitude(lat), longitude(lon) {}
 
+Airport::Airport() : code("CODE"), name("NAME"), type("TYPE"), latitude(-1), longitude(-1) {}
 
 
 double Airport::distanceTo(const Airport& other) const {
