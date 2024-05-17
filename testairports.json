@@ -78,15 +78,5 @@
         "continent": "NA",
         "iata": "BOS",
         "icao": "KBOS"
-    },
-    {
-        "ident": "KPHL",
-        "name": "Philadelphia International Airport",
-        "type": "large_airport",
-        "latitude": "39.87189865112305",
-        "longitude": "-75.24109649658203",
-        "continent": "NA",
-        "iata": "PHL",
-        "icao": "KPHL"
     }
 ]

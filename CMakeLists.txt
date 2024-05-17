@@ -14,6 +14,7 @@ set(sources
 set(edgetests
     "edge.h"
     "edgeTest.cpp"
+    "Airport.cpp"
 )
 
 set(airporttests

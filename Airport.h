@@ -10,7 +10,13 @@
 #include <string>
 #include <cmath>
 
+// Converts degree coordinates to radians for formula use
 double toRadians(double degrees);
+
+/**
+ * Calculates the distance between two locations given their longitudal and latitudal
+ * degree coordinates using the haversine equation (link in Readme)
+ */
 double haversine(double lat1, double lon1, double lat2, double lon2);
 
 class Airport {
