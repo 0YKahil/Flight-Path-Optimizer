@@ -6,7 +6,7 @@
  */
 #define CATCH_CONFIG_MAIN
 #include "catch.hpp"
-#include "edge.h"
+#include "../include/Edge.h"
 
 double yowLat = 45.3225;
 double yowLon = -75.6692;

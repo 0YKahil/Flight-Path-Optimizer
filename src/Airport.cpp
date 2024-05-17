@@ -1,16 +1,12 @@
-/*
+/**
  * @file: Airport.cpp
  * @author: 0Ykahil
  * 
  * Implementation of Airport Object
  */
 
-#include "Airport.h"
+#include "../include/Airport.h"
 
-/*    
- * MATH HELPERS 
- * 
- */
 
 // Earth's radius in nm
 const double EARTH_RADIUS_NM = 3440.065;

@@ -7,7 +7,7 @@
 #define CATCH_CONFIG_MAIN
 #include <iostream>
 #include "catch.hpp"
-#include "Airport.h"
+#include "../include/Airport.h"
 
 double yowLat = 45.3225;
 double yowLon = -75.6692;
