@@ -2,7 +2,7 @@
  * @file: airportTest.cpp
  * @author: 0Ykahil
  * 
- * Tests for Edge class
+ * Tests for Airport class
  */
 #define CATCH_CONFIG_MAIN
 #include <iostream>
