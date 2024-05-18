@@ -1,11 +1,13 @@
 # Flight Path Optimizer
 
-Flight Path Optimizer calculates the shortest route for a limited plane's range using Dijkstra's algorithm. The program fetches airport data from OurAirports API, calculates the distances between all pairs of airports that fit the given needs, and creates a graph with airports as nodes and requirement matching distances as edges, then outputs the shortest path to the destination of choice.
+Flight Path Optimizer calculates the shortest route for a limited plane's range using Dijkstra's algorithm. The program fetches airport data from OurAirports API, calculates the great circle distances (orthodromic distance) between all pairs of airports that fit the given needs, and creates a graph with airports as nodes and requirement matching distances as edges, then outputs the shortest path to the destination of choice.
 
 
 This Project Uses the Cessna 172 as the reference plane but the program can be easily modified to accommodate other planes
 
 While the max range is 650nm, a realsitic range for the Cesna 172 is 400nm (number obtained from a licensed pilot), so the program will set a 400nm limit which can be modified if needed.
+
+**Change THRESHOLD VARIABLE in flightpathOptimizer.cpp to change the max range**
 
 ## Features
 

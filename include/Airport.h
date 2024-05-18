@@ -69,7 +69,6 @@ class Airport {
          * @return true if the airports have the same identifying id; false otherwise.
          */
         bool operator==(const Airport& other) const;
-        
 
 };
 

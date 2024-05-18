@@ -48,7 +48,7 @@ class Graph {
         void printGraph() const;
 
         // Print the graph to a given output stream
-        void printGraph(std::ostream& os = std::cout) const;
+        void printGraph(std::ostream& os) const;
     private:
         size_t numVertices; // The current number of vertices in the graph.
         std::vector<std::list<Edge>> adjList; // the adjacency list containing the edges.

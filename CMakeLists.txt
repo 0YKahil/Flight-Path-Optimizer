@@ -16,9 +16,16 @@ set(graphtests
     "./src/Airport.cpp"
     "./src/Graph.cpp"
     "./tests/graphTest.cpp"
+)
+
+set (main
+    "./src/Airport.cpp"
+    "./src/Graph.cpp"
+    "./src/flightPathOptimizer.cpp"
 
 )
 
 # add_executable(edgeTest ${edgetests})
 add_executable(airportTest ${airporttests})
 add_executable(graphTest ${graphtests})
+add_executable(flightPathOptimizer ${main})
