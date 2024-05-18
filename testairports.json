@@ -78,5 +78,15 @@
         "continent": "NA",
         "iata": "BOS",
         "icao": "KBOS"
+    },
+    {
+        "ident": "KIAG",
+        "name": "Niagara Falls International Airport",
+        "type": "medium_airport",
+        "latitude": "43.1073",
+        "longitude": "-78.946198",
+        "continent": "NA",
+        "iata": "IAG",
+        "icao": "KIAG"
     }
 ]

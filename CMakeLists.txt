@@ -4,7 +4,7 @@ project(FlightPathOptimizer)
 
 
 set(edgetests
-    "./include/Edge.h"
+    "./src/Edge.cpp"
     "./tests/edgeTest.cpp"
     "./src/Airport.cpp"
 )

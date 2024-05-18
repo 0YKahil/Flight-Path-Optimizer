@@ -14,8 +14,8 @@
 double toRadians(double degrees);
 
 /**
- * @brief Calculates the distance between two locations, given their longitudinal and latitudinal degree coordinates, 
- *        using the haversine equation.
+ * Calculates the distance between two locations, given their longitudinal and latitudinal degree coordinates, 
+ * using the haversine equation.
  * 
  * @param lat1 The latitude of the first location.
  * @param lon1 The longitude of the first location.
@@ -27,7 +27,7 @@ double haversine(double lat1, double lon1, double lat2, double lon2);
 
 /**
  * @class Airport
- * @brief Represents an airport with its identifier, name, type, code, latitude, and longitude.
+ * Represents an airport with its identifier, name, type, code, latitude, and longitude.
  */
 class Airport {
     public:
@@ -39,7 +39,7 @@ class Airport {
         double longitude;   // Longitude of airport.
 
         /**
-         * @brief Constructor for Airport.
+         * Constructor for Airport.
          * 
          * @param code The airport code/identifier.
          * @param name The name of the airport.
@@ -51,12 +51,12 @@ class Airport {
                 double lat, double lon);
         
         /**
-         * @brief Empty constructor for Airport with no values.
+         * Empty constructor for Airport with no values.
          */
         Airport();
 
         /**
-         * @brief Calculates the great circle distance (orthodromic distance) between this airport and another airport using the haversine formula.
+         * Calculates the great circle distance (orthodromic distance) between this airport and another airport using the haversine formula.
          * 
          * @param other The airport to which the distance is being calculated.
          * @return The distance from this airport to the other airport in nautical miles.
@@ -64,7 +64,7 @@ class Airport {
         double distanceTo(const Airport& other) const;  
 
         /**
-         * @brief Compares airports based on their identifying code.
+         * Compares airports based on their identifying code.
          * 
          * @param other The other airport to compare with.
          * @return true if the airports have the same identifying code; false otherwise.
