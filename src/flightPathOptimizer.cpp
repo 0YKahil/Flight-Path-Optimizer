@@ -7,7 +7,8 @@
  * point and destination airport.
  */
 
+#include "../include/Graph.h"
+
 int main() {
 
-    return 0;
 }

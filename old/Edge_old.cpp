@@ -5,7 +5,7 @@
  * Implementation of Edge
  */
 
-#include "../include/Edge.h"
+#include "Edge_old.h"
 
 // Constructor for Edge made up of source and dest airport
 Edge::Edge(const Airport& u, const Airport& v, double w, std::string label)
@@ -17,7 +17,7 @@ Edge::Edge(const Airport& u, const Airport& v, std::string label)
 
 // Constructor for Edge with automatic weight and label calculation
 Edge::Edge(const Airport& u, const Airport& v)
-    : source(u), dest(v), weight(u.distanceTo(v)), label("(" + u.code + ", " + v.code) {}
+    : source(u), dest(v), weight(u.distanceTo(v)), label("(" + u.id + ", " + v.id) {}
 
 // Default Constructor with default/empty values
 Edge::Edge() : source(Airport()), dest(Airport()), weight(-1), label("") {}

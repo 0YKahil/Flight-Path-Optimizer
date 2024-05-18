@@ -12,7 +12,6 @@ CTestTestfile.cmake
 _deps
 
 #exe's
-edgeTest
-airportTest
 .vscode
 build
+*Test

@@ -18,7 +18,7 @@ TEST_CASE("Test Constructor") {
     Airport a1 = Airport("YYK", "Vancouver International", "large_airport", -30.14, 20.15);
     REQUIRE(a1.latitude == -30.14);
     REQUIRE(a1.name == "Vancouver International");
-    REQUIRE(a1.code == "YYK");
+    REQUIRE(a1.id == "YYK");
 }
 
 

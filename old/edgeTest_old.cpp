@@ -6,7 +6,7 @@
  */
 #define CATCH_CONFIG_MAIN
 #include "catch.hpp"
-#include "../include/Edge.h"
+#include "../old/Edge_old.h"
 
 
 Airport yow("YOW", "Ottawa", "medium_airport", 45.3225, -75.6692);

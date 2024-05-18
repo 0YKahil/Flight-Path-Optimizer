@@ -28,11 +28,11 @@ double haversine(double lat1, double lon1, double lat2, double lon2) {
     return EARTH_RADIUS_NM*2*atan2(sqrt(inside), sqrt(1 - inside));
 }
 
-Airport::Airport(const std::string& code, const std::string& name, const std::string& t, 
+Airport::Airport(const std::string& id, const std::string& name, const std::string& t, 
                 double lat, double lon)
-                : code(code), name(name), type(t), latitude(lat), longitude(lon) {}
+                : id(id), name(name), type(t), latitude(lat), longitude(lon) {}
 
-Airport::Airport() : code("CODE"), name("NAME"), type("TYPE"), latitude(-1), longitude(-1) {}
+Airport::Airport() : id("CODE"), name("NAME"), type("TYPE"), latitude(-1), longitude(-1) {}
 
 
 double Airport::distanceTo(const Airport& other) const {
@@ -40,5 +40,5 @@ double Airport::distanceTo(const Airport& other) const {
 }
 
 bool Airport::operator==(const Airport& other) const {
-    return this->code == other.code;
+    return this->id == other.id;
 }

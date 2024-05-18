@@ -4,8 +4,6 @@ project(FlightPathOptimizer)
 
 
 set(edgetests
-    "./src/Edge.cpp"
-    "./tests/edgeTest.cpp"
     "./src/Airport.cpp"
 )
 
@@ -14,5 +12,13 @@ set(airporttests
     "./tests/airportTest.cpp"
 )
 
-add_executable(edgeTest ${edgetests})
+set(graphtests
+    "./src/Airport.cpp"
+    "./src/Graph.cpp"
+    "./tests/graphTest.cpp"
+
+)
+
+# add_executable(edgeTest ${edgetests})
 add_executable(airportTest ${airporttests})
+add_executable(graphTest ${graphtests})

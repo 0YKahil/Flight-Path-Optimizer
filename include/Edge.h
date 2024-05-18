@@ -2,12 +2,14 @@
  * @file: edge.h 
  * @author: 0YKahil
  * 
- * Definition of edge
+ * Declaration of Graph
  */
 #pragma once
 
 #include <string>
 #include "Airport.h"
+
+typedef size_t Vertex;
 
 /**
  * @class Edge 
@@ -16,12 +18,9 @@
  */
 class Edge {
     public:
-        Airport source; // The source vertex (airport) of the edge.
-        Airport dest;   // The destination vertext (airport) of the edge.
-        double weight; // The weight of the edge, representing the distance between source and dest.
-        
-        std::string label; // The label representing the edge 
-                           //formatted as: "(source airport identifier, destination airport identifier)".
+        Vertex source; // The source vertex (airport) of the edge.
+        Vertex dest;   // The destination vertex (airport) of the edge.
+        int weight; // The weight of the edge, representing the distance between source and dest.
 
     /**
      * Constructs an edge using given vertices, weight, and label
@@ -29,38 +28,17 @@ class Edge {
      * @param u The source Airport vertex.
      * @param v The destination Airport vertex.
      * @param w The weight of the edge representing the distance between source and dest.
-     * @param label The label of the edge formatted as "(source airport identifier, destination airport identifier)"
-     *                                                  OR "(source airport identifier -> destination airport identifier)".
     */
-    Edge(const Airport& u, const Airport& v, double w, std::string label);
+    Edge(const Vertex& u, const Vertex& v, int w)
+        : source(u), dest(v), weight(w) {}
 
-    /**
-     * Constructs an edge using given vertices, and label. Automatically calculates the weight 
-     *                                                            using the distanceTo() function.
-     * 
-     * @param u The source Airport vertex.
-     * @param v The destination Airport vertex.
-     * @param label The label of the edge formatted as "(source airport identifier, destination airport identifier)"
-     *                                                  OR "(source airport identifier -> destination airport identifier)".
-    */
-    Edge(const Airport& u, const Airport& v, std::string label);
-
-    /**
-     * Constructs an edge using given vertices, and automatically
-     * calculates the weight, and provides the labels in the format: 
-     *                 "(source identifier, destination identifier)"
-     * 
-     * @param u The source Airport vertex.
-     * @param v The destination Airport vertex.
-    */
-    Edge(const Airport& u, const Airport& v);
 
     /**
      * Default constructor for Edge.
      * 
      * Constructs an edge with default values, weight = -1, and no label.
      */
-    Edge();
+    Edge() : source(-1), dest(-1), weight(-1) {}
 
     /**
      * Compares the weights of two edges.
