@@ -20,36 +20,20 @@
  */
 const int THRESHOLD = 250;
 
-
-int main() {
-    std::ifstream file("testairports.json");
-    nlohmann::json jsonData;
-
-    std::cout << "reading file... ";
-    file >> jsonData; // read the airports file into json object
-    std::cout << "done" << std::endl;
-
-    /**
-     * CREATING AIRPORT GRAPH
-     * using the json data provided from the given file
-     */
-    std::cout << "generating airport graph... ";
-
-    Graph g((size_t)jsonData.size()); // numVertices here is the number of airports in airports.json
-
+/**
+ * Generates an airport graph with airports as the vertices and distances as the edges 
+ * represented by an adjacency list, ONLY creating edges where the **distance < THRESHOLD**.
+ * 
+ * @param jsonData The JsonData containing airport identifier, name, location, etc. data to be parsed
+*/
+Graph generateAirportGraph(nlohmann::json jsonData) {
     /* Parse airports from json to Airport objects and add them to graph*/ 
+
+    Graph g((size_t)jsonData.size()); // numVertices = num airports in airports.json
 
     std::vector<Airport> airports; // array will hold our parsed airport objects
 
     for (const auto& item: jsonData) {
-        // Ensuring that if the airport does not have a provided code, use the alternate,
-        // and if also not provided, use the identifier
-        // std::string identifier = item["icao"];
-        // if (item["icao"] == "") {
-        //     if (item["iata"] != "") identifier = item["iata"];
-        //     else identifier = item["ident"];
-        // }
-        // create airport object using the data
         Airport airport(
             item["ident"],
             item["name"],
@@ -79,6 +63,24 @@ int main() {
             }
         }
     }
+
+    return g;
+}
+
+
+int main() {
+    std::ifstream file("testairports.json");
+    nlohmann::json jsonData;
+
+    std::cout << "reading file... ";
+    file >> jsonData; // read the airports file into json object
+    std::cout << "done" << std::endl;
+
+    // Creating AirportGraph
+
+    std::cout << "generating airport graph... ";
+
+    Graph g = generateAirportGraph(jsonData);
 
     std::cout << "done" << std::endl;
 
