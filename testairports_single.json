@@ -1,0 +1,12 @@
+[
+    {
+        "ident": "CYOW",
+        "name": "Ottawa Macdonald-Cartier International Airport",
+        "type": "large_airport",
+        "latitude": "45.3224983215332",
+        "longitude": "-75.66919708251953",
+        "continent": "NA",
+        "iata": "YOW",
+        "icao": "CYOW"
+    }
+]

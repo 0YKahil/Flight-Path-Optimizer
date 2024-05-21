@@ -12,6 +12,7 @@
 #include <list>
 #include "Airport.h"
 #include "Edge.h"
+#include "../external/json.hpp" 
 
 /**
  * @class Graph 
@@ -49,6 +50,16 @@ class Graph {
 
         // Print the graph to a given output stream
         void printGraph(std::ostream& os) const;
+
+        /**
+         * Generates an airport graph with airports as the vertices and distances as the edges 
+         * represented by an adjacency list, ONLY creating edges where the **distance < threshold**.
+         * 
+         * @param jsonData The JsonData containing airport identifier, name, location, etc. data to be parsed.
+         * @param threshold The threshold in nautical miles, where edges will be created if below it (realistic range of aircraft).
+         */
+        void generateAirportGraph(const nlohmann::json& jsonData, const int threshold);
+
     private:
         size_t numVertices; // The current number of vertices in the graph.
         std::vector<std::list<Edge>> adjList; // the adjacency list containing the edges.

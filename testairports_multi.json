@@ -1,0 +1,52 @@
+[
+    {
+        "ident": "CYOW",
+        "name": "Ottawa Macdonald-Cartier International Airport",
+        "type": "large_airport",
+        "latitude": "45.3224983215332",
+        "longitude": "-75.66919708251953",
+        "continent": "NA",
+        "iata": "YOW",
+        "icao": "CYOW"
+    },
+    {
+        "ident": "KMDW",
+        "name": "Chicago Midway International Airport",
+        "type": "large_airport",
+        "latitude": "41.785999",
+        "longitude": "-87.752403",
+        "continent": "NA",
+        "iata": "MDW",
+        "icao": "KMDW"
+    },
+    {
+        "ident": "CYYZ",
+        "name": "Lester B. Pearson International Airport",
+        "type": "large_airport",
+        "latitude": "43.6772003174",
+        "longitude": "-79.63059997559999",
+        "continent": "NA",
+        "iata": "YYZ",
+        "icao": "CYYZ"
+    },
+    {
+        "ident": "KCLE",
+        "name": "Cleveland Hopkins International Airport",
+        "type": "large_airport",
+        "latitude": "41.4117012024",
+        "longitude": "-81.8498001099",
+        "continent": "NA",
+        "iata": "CLE",
+        "icao": "KCLE"
+    },
+    {
+        "ident": "KIAG",
+        "name": "Niagara Falls International Airport",
+        "type": "medium_airport",
+        "latitude": "43.1073",
+        "longitude": "-78.946198",
+        "continent": "NA",
+        "iata": "IAG",
+        "icao": "KIAG"
+    }
+]

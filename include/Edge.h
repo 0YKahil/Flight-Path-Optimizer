@@ -46,7 +46,7 @@ class Edge {
      * @param other The other edge to compare this edge with.
      * @return true if this edge's weight is less than the other edge's weight; false otherwise
      */
-    bool operator<(const Edge& other) const;
+    bool operator<(const Edge& other) const { return weight < other.weight; }
 
     /**
      * Checks if the two edges are the same edge.
@@ -54,7 +54,11 @@ class Edge {
      * @param other The other edge to compare this edge with.
      * @return true if this edge is the same as the other edge (locations are the same if flipped); false otherwise
      */
-    bool operator==(const Edge& other) const;
+    bool operator==(const Edge& other) const {
+        if (source == other.source && dest == other.dest) return true;
+        if (source == other.dest && dest == other.source) return true;
+        return false;
+    }
 
 
 };

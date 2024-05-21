@@ -58,3 +58,43 @@ void Graph::printGraph(std::ostream& os) const {
         os << std::endl;
     }
 }
+
+
+void Graph::generateAirportGraph(const nlohmann::json& jsonData, const int threshold) {
+    /* Parse airports from json to Airport objects and add them to graph*/ 
+    this->numVertices = jsonData.size(); // numVertices = num airports in airports.json
+    adjList.resize(numVertices); // create enough space for all our airports
+
+    std::vector<Airport> airports; // array will hold our parsed airport objects
+
+    for (const auto& item: jsonData) {
+        Airport airport(
+            item["ident"],
+            item["name"],
+            item["type"],
+            // convert lon and lat from string to double
+            std::stod(item["latitude"].get<std::string>()),
+            std::stod(item["longitude"].get<std::string>())
+        );
+
+        airports.push_back(airport);
+
+        // add the airport as a vertex to our graph
+        this->addVertex(airport);
+    }
+
+    /* Iterating through pairs of airports and creating the
+     * edges with distances as the weights.
+     */ 
+    for (size_t i = 0; i < airports.size(); ++i) {
+        // start at i + 1 to prevent creating an edge to self
+        for (size_t j = i + 1; j < airports.size(); ++j) {
+            double distance = airports[i].distanceTo(airports[j]);
+
+            // ensure distance is within THRESHOLD
+            if (distance <= threshold) {
+                this->addEdge(airports[i], airports[j]);
+            }
+        }
+    }
+}
