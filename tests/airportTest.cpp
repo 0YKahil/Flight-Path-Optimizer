@@ -14,6 +14,7 @@ double yowLon = -75.6692;
 double jfkLat = 40.6413;
 double jfkLon = -73.7781;
 
+
 TEST_CASE("Test Constructor") {
     Airport a1 = Airport("YYK", "Vancouver International", "large_airport", -30.14, 20.15);
     REQUIRE(a1.latitude == -30.14);
@@ -23,11 +24,6 @@ TEST_CASE("Test Constructor") {
 
 
 TEST_CASE("Test Haversine") {
-    double yowLat = 45.3225;
-    double yowLon = -75.6692;
-    double jfkLat = 40.6413;
-    double jfkLon = -73.7781;
-
     double mexLat = 19.4363;
     double mexLon = -99.072098;
 

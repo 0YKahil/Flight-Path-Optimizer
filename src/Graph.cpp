@@ -98,3 +98,8 @@ void Graph::generateAirportGraph(const nlohmann::json& jsonData, const int thres
         }
     }
 }
+
+
+std::pair<bool, std::vector<Airport>> Graph::findShortestPath(const Airport& start, const Airport& destination) const {
+    return {false, {}};// stub
+}
