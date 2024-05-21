@@ -48,7 +48,7 @@ TEST_CASE("Test distanceTo method") {
     REQUIRE(yow.distanceTo(jfk) < 300);
 }
 
-TEST_CASE("Test comparing operator") {
+TEST_CASE("Test compatison '==' operator") {
     Airport yow1 = Airport("YOW", "Ottawa Macdonald international", "large_airport", yowLat, yowLon);
     Airport yow = Airport("YOW", "Ottawa international", "large_airport", yowLat, yowLon);
     Airport jfk = Airport("JFK", "John F Kennedy international", "large_airport", jfkLat, jfkLon);
