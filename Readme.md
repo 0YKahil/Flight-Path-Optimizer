@@ -25,11 +25,11 @@ using the Haversine formula https://en.wikipedia.org/wiki/Haversine_formula
 - **Limit Edge Creation:** Only connect airports within the specified distance.
 - **Optimize Performance:** Reduce graph density for faster pathfinding.
 - **Realistic pathing:** Reflect a realistic route that the specified aircraft range can reach.
-## For example if your range is 280nm, a graph from sample data would look like this:
+### For example if your range is 280nm, a graph from sample data would look like this:
 ![Alt text](planning_and_test_documents/generateGraph_multi_280_expected.png)
-## Whereas if your range is 250nm, the path to reach MDW would no longer be possible, resulting in this graph:
+### Whereas if your range is 250nm, the path to reach MDW would no longer be possible, resulting in this graph:
 ![Alt text](planning_and_test_documents/generateGraph_multi_250_expected.png)
-## And if for some reason your range is only 100nm...
+### And if for some reason your range is only 100nm...
 ![Alt text](planning_and_test_documents/generateGraph_multi_100_expected.png)
 
 
