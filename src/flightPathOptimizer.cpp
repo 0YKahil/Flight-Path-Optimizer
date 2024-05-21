@@ -17,7 +17,7 @@
  * NOTE: This will typically be what you will change depending on the aircraft's
  *       MAX range after calculating for fuel burning, wind, etc.
  */
-const int THRESHOLD = 250;
+const int THRESHOLD = 300;
 
 int main() {
     std::ifstream file("testairports.json");

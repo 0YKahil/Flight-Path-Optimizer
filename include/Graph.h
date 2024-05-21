@@ -9,6 +9,8 @@
 #include <iostream>
 #include <vector>
 #include <unordered_map>
+#include <queue>
+#include <limits>
 #include <list>
 #include "Airport.h"
 #include "Edge.h"
@@ -59,6 +61,16 @@ class Graph {
          * @param threshold The threshold in nautical miles, where edges will be created if below it (realistic range of aircraft).
          */
         void generateAirportGraph(const nlohmann::json& jsonData, const int threshold);
+
+        /**
+         * Finds the shortest path from start airport to destination airport using Dijkstra's algorithm
+         * and returning it as a list of edges in order IF REACHABLE.
+         * If NOT reachable, returns false.
+         * 
+         * @param start The starting Airport
+         * @param destination The destination Airport
+         */
+        std::pair<bool, std::vector<Airport>> findShortestPath(const Airport& start, const Airport& destination) const;
 
     private:
         size_t numVertices; // The current number of vertices in the graph.
