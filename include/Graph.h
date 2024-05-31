@@ -6,6 +6,7 @@
  */
 #pragma once
 
+#include <fstream>
 #include <iostream>
 #include <vector>
 #include <unordered_map>
@@ -74,6 +75,9 @@ class Graph {
          * @param destination The destination Airport
          */
         std::pair<bool, std::vector<Airport>> findShortestPath(const Airport& start, const Airport& destination) const;
+
+        // Creates a dot diagram to be used with graphviz for visualizing the graphs
+        void toDOT(const std::string& filename) const;
 
     private:
         size_t numVertices; // The current number of vertices in the graph.

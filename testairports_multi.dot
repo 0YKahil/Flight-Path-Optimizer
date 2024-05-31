@@ -1,0 +1,8 @@
+graph G {
+    "CYOW" -- "CYYZ" [label="196"];
+    "CYOW" -- "KIAG" [label="193"];
+    "KMDW" -- "KCLE" [label="265"];
+    "CYYZ" -- "KCLE" [label="167"];
+    "CYYZ" -- "KIAG" [label="45"];
+    "KCLE" -- "KIAG" [label="164"];
+}

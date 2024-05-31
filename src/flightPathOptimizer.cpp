@@ -18,11 +18,11 @@
  * NOTE: This will typically be what you will change depending on the aircraft's
  *       MAX range after calculating for fuel burning, wind, etc.
  */
-const int THRESHOLD = 5000;
+const int THRESHOLD = 280;
 
 int main() {
     // std::ifstream file("testairports.json");
-    std::ifstream file("global_airports.json");
+    std::ifstream file("testairports_multi.json");
     nlohmann::json jsonData;
 
     std::cout << "reading file... ";
@@ -39,11 +39,16 @@ int main() {
 
     auto t2 = std::chrono::high_resolution_clock::now();
 
+    g.toDOT("testairports_multi.dot");
+
+
+
+
     std::chrono::duration<double, std::milli> ms_double = t2 - t1;
     std::cout << "done" << std::endl;
     std::cout << "time taken: " << ms_double.count() << "ms" << std::endl;
 
-    // g.printGraph();
+    g.printGraph();
 
     
 

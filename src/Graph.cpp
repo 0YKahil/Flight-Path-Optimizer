@@ -61,7 +61,6 @@ void Graph::printGraph(std::ostream& os) const {
     }
 }
 
-
 void Graph::generateAirportGraph(const nlohmann::json& jsonData, const int threshold, bool useMultithreading) {
     /* Parse airports from json to Airport objects and add them to graph*/ 
     this->numVertices = jsonData.size(); // numVertices = num airports in airports.json
@@ -140,4 +139,20 @@ void Graph::generateAirportGraph(const nlohmann::json& jsonData, const int thres
 
 std::pair<bool, std::vector<Airport>> Graph::findShortestPath(const Airport& start, const Airport& destination) const {
     return {false, {}};// stub
+}
+
+
+void Graph::toDOT(const std::string& filename) const {
+    std::ofstream file(filename);
+    file << "graph G {\n";
+    for (size_t i = 0; i < adjList.size(); ++i) {
+        for (const auto& edge : adjList[i]) {
+            if (i < edge.dest) {
+                file << "    \"" << vertices[i].id << "\" -- \""
+                     << vertices[edge.dest].id << "\" [label=\"" << edge.weight << "\"];\n";
+            }
+        }
+    }
+    file << "}\n";
+    file.close();
 }
