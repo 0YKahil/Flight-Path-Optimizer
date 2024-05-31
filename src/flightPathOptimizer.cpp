@@ -8,6 +8,7 @@
  */
 #include <fstream>
 #include <iostream>
+#include <chrono>
 #include "../include/Graph.h"
 
 /**
@@ -17,10 +18,11 @@
  * NOTE: This will typically be what you will change depending on the aircraft's
  *       MAX range after calculating for fuel burning, wind, etc.
  */
-const int THRESHOLD = 300;
+const int THRESHOLD = 5000;
 
 int main() {
-    std::ifstream file("testairports.json");
+    // std::ifstream file("testairports.json");
+    std::ifstream file("global_airports.json");
     nlohmann::json jsonData;
 
     std::cout << "reading file... ";
@@ -30,12 +32,19 @@ int main() {
     // Creating AirportGraph
 
     std::cout << "generating airport graph... ";
-    
+    auto t1 = std::chrono::high_resolution_clock::now();
+
     Graph g(jsonData.size());
-    g.generateAirportGraph(jsonData, THRESHOLD);
+    g.generateAirportGraph(jsonData, THRESHOLD, true);
 
+    auto t2 = std::chrono::high_resolution_clock::now();
+
+    std::chrono::duration<double, std::milli> ms_double = t2 - t1;
     std::cout << "done" << std::endl;
+    std::cout << "time taken: " << ms_double.count() << "ms" << std::endl;
 
-    g.printGraph();
+    // g.printGraph();
+
+    
 
 }

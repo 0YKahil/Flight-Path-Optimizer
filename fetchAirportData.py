@@ -77,12 +77,12 @@ def main():
     airports_data = parse_airport_data(med_ap) + parse_airport_data(lg_ap)
 
     # filter for north america and some central america
-    ap_filt = filter_by_region(airports_data, "NA")
+    # ap_filt = filter_by_region(airports_data, "NA")
 
     # Write the data to a JSON file
     try: 
-        with open('airports.json', 'w') as file:
-            json.dump(ap_filt, file, indent=4)
+        with open('global_airports.json', 'w') as file:
+            json.dump(airports_data, file, indent=4)
         print('Data written to airports.json')
     except:
         print("Exception occured while writing JSON file to directory")

@@ -12,6 +12,8 @@
 #include <queue>
 #include <limits>
 #include <list>
+#include <thread>
+#include <mutex>
 #include "Airport.h"
 #include "Edge.h"
 #include "../external/json.hpp" 
@@ -59,8 +61,9 @@ class Graph {
          * 
          * @param jsonData The JsonData containing airport identifier, name, location, etc. data to be parsed.
          * @param threshold The threshold in nautical miles, where edges will be created if below it (realistic range of aircraft).
+         * @param useMultithreading If True, the function will use multithreading when creating the edge list, this is to speed up the generating for dense sets
          */
-        void generateAirportGraph(const nlohmann::json& jsonData, const int threshold);
+        void generateAirportGraph(const nlohmann::json& jsonData, const int threshold, bool useMultithreading);
 
         /**
          * Finds the shortest path from start airport to destination airport using Dijkstra's algorithm
@@ -77,4 +80,5 @@ class Graph {
         std::vector<std::list<Edge>> adjList; // the adjacency list containing the edges.
         std::vector<Airport> vertices; // The vertices (airports) in the graph.
         std::unordered_map<std::string, size_t> airportToIndex; // Maps airport id to an index
+        std::mutex mtx; // Mutex for thread-safe operations
 };
