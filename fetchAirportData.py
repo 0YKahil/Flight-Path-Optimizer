@@ -5,11 +5,11 @@
 Script to grab airport location data from OurAirports API
 and convert it into a JSON file
 """
-from ourairports import OurAirports
+import os
 import json
+from ourairports import OurAirports
 
-from ourairports import OurAirports
-import json
+
 
 # Create an instance of the OurAirports API
 our_airports = OurAirports()
@@ -77,13 +77,16 @@ def main():
     airports_data = parse_airport_data(med_ap) + parse_airport_data(lg_ap)
 
     # filter for north america and some central america
-    # ap_filt = filter_by_region(airports_data, "NA")
+    ap_filt = filter_by_region(airports_data, "NA")
 
     # Write the data to a JSON file
+    output_dir = './datasets'
+    os.makedirs(output_dir, exist_ok=True)
+    output_path = os.path.join(output_dir, 'global_airports.json')
     try: 
-        with open('global_airports.json', 'w') as file:
+        with open(output_path, 'w') as file:
             json.dump(airports_data, file, indent=4)
-        print('Data written to airports.json')
+        print('Data written to global_airports.json')
     except:
         print("Exception occured while writing JSON file to directory")
 

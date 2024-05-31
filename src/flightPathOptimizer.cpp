@@ -22,7 +22,7 @@ const int THRESHOLD = 280;
 
 int main() {
     // std::ifstream file("testairports.json");
-    std::ifstream file("testairports_multi.json");
+    std::ifstream file("testairports.json");
     nlohmann::json jsonData;
 
     std::cout << "reading file... ";
@@ -39,7 +39,7 @@ int main() {
 
     auto t2 = std::chrono::high_resolution_clock::now();
 
-    g.toDOT("testairports_multi.dot");
+    g.toDOT("./dot_files/airports.dot");
 
 
 
