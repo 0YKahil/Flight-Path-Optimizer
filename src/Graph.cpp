@@ -10,6 +10,7 @@
 Graph::Graph(size_t numVertices)
     : numVertices(numVertices), adjList(numVertices) {}
 
+
 void Graph::addVertex(const Airport& airport) {
     vertices.push_back(airport);
 

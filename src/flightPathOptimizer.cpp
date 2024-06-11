@@ -21,11 +21,10 @@
 const int THRESHOLD = 280;
 
 int main() {
-    // std::ifstream file("testairports.json");
-    std::ifstream file("testairports.json");
-    nlohmann::json jsonData;
-
+    // Read the json file into jsonData
     std::cout << "reading file... ";
+    std::ifstream file("./datasets/testairports.json");
+    nlohmann::json jsonData;
     file >> jsonData; // read the airports file into json object
     std::cout << "done" << std::endl;
 
@@ -39,17 +38,14 @@ int main() {
 
     auto t2 = std::chrono::high_resolution_clock::now();
 
+    // Creating visual dot file of graph found in ./dot_files/
     g.toDOT("./dot_files/airports.dot");
 
 
-
-
+    // Calculating time taken to generate the graph
     std::chrono::duration<double, std::milli> ms_double = t2 - t1;
     std::cout << "done" << std::endl;
     std::cout << "time taken: " << ms_double.count() << "ms" << std::endl;
-
     g.printGraph();
-
-    
 
 }

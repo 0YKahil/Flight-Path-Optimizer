@@ -74,12 +74,12 @@ TEST_CASE("Graph handles self-loop") {
 
 TEST_CASE("Generate graph from airport json (SINGLE airport, THRESHOLD = 250)") {
 
-    std::ifstream file("testairports_single.json");
+    std::ifstream file("./datasets/testairports_single.json");
     nlohmann::json jsonData;
     file >> jsonData; 
 
     Graph g(jsonData.size());
-    g.generateAirportGraph(jsonData, 250);
+    g.generateAirportGraph(jsonData, 250, false);
 
     std::ostringstream output;
     g.printGraph(output);
@@ -91,12 +91,12 @@ TEST_CASE("Generate graph from airport json (SINGLE airport, THRESHOLD = 250)") 
 
 TEST_CASE("Generate graph from airport json (MULTI airport, THRESHOLD = 250)") {
 
-    std::ifstream file("testairports_multi.json");
+    std::ifstream file("./datasets/testairports_multi.json");
     nlohmann::json jsonData;
     file >> jsonData; 
 
     Graph g(jsonData.size());
-    g.generateAirportGraph(jsonData, 250);
+    g.generateAirportGraph(jsonData, 250, false);
 
     std::ostringstream output;
     g.printGraph(output);
@@ -112,12 +112,12 @@ TEST_CASE("Generate graph from airport json (MULTI airport, THRESHOLD = 250)") {
 
 TEST_CASE("Generate graph from airport json (MULTI airport, THRESHOLD = 280)") {
 
-    std::ifstream file("testairports_multi.json");
+    std::ifstream file("./datasets/testairports_multi.json");
     nlohmann::json jsonData;
     file >> jsonData; 
 
     Graph g(jsonData.size());
-    g.generateAirportGraph(jsonData, 280);
+    g.generateAirportGraph(jsonData, 280, false);
 
     std::ostringstream output;
     g.printGraph(output);
@@ -133,12 +133,12 @@ TEST_CASE("Generate graph from airport json (MULTI airport, THRESHOLD = 280)") {
 
 TEST_CASE("Generate graph from airport json (MULTI airport, THRESHOLD = 100)") {
 
-    std::ifstream file("testairports_multi.json");
+    std::ifstream file("./datasets/testairports_multi.json");
     nlohmann::json jsonData;
     file >> jsonData; 
 
     Graph g(jsonData.size());
-    g.generateAirportGraph(jsonData, 100);
+    g.generateAirportGraph(jsonData, 100, false);
 
     std::ostringstream output;
     g.printGraph(output);
