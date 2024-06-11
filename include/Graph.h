@@ -74,7 +74,7 @@ class Graph {
          * @param start The starting Airport
          * @param destination The destination Airport
          */
-        std::pair<bool, std::vector<Airport>> findShortestPath(const Airport& start, const Airport& destination) const;
+        std::vector<Airport> findShortestPath(const Airport& start, const Airport& destination) const;
 
         // Creates a dot diagram to be used with graphviz for visualizing the graphs
         void toDOT(const std::string& filename) const;
