@@ -1,18 +1,8 @@
 graph G {
-    "KJFK" -- "KPHL" [label="81"];
-    "KJFK" -- "KBOS" [label="162"];
-    "KJFK" -- "KIAG" [label="274"];
     "CYOW" -- "CYYZ" [label="196"];
-    "CYOW" -- "CYUL" [label="81"];
-    "CYOW" -- "KBOS" [label="268"];
     "CYOW" -- "KIAG" [label="193"];
     "KMDW" -- "KCLE" [label="265"];
-    "CYYZ" -- "CYUL" [label="273"];
     "CYYZ" -- "KCLE" [label="167"];
     "CYYZ" -- "KIAG" [label="45"];
-    "CYUL" -- "KBOS" [label="220"];
-    "CYUL" -- "KIAG" [label="264"];
     "KCLE" -- "KIAG" [label="164"];
-    "KPHL" -- "KBOS" [label="243"];
-    "KPHL" -- "KIAG" [label="255"];
 }

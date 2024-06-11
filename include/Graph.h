@@ -13,11 +13,14 @@
 #include <queue>
 #include <limits>
 #include <list>
+#include <utility>
 #include <thread>
 #include <mutex>
 #include "Airport.h"
 #include "Edge.h"
 #include "../external/json.hpp" 
+
+typedef std::pair<int, int> iPair;
 
 /**
  * @class Graph 
@@ -68,17 +71,30 @@ class Graph {
 
         /**
          * Finds the shortest path from start airport to destination airport using Dijkstra's algorithm
-         * and returning it as a list of edges in order IF REACHABLE.
-         * If NOT reachable, returns false.
+         * and prints out the path in order if it is reachable.
+         * If NOT reachable, prints (cannot reach)
          * 
          * @param start The starting Airport
          * @param destination The destination Airport
          */
-        std::vector<Airport> findShortestPath(const Airport& start, const Airport& destination) const;
+        std::vector<int> findShortestPath(const Airport& start, const Airport& destination);
+
+        /**
+         * Converts startID and destID to their corresponding airports, and 
+         * Maps the elements of the resulting array of findShortestPath() on the given ids
+         * back to strings, and prints them out
+         * 
+         * @param startID The id of the starting Airport (e.g. CYYZ, CYOW)
+         * @param destID The id of the destination Airport
+         */
+        void printShortestPath(const std::string startID, const std::string destID);
+        void printShortestPath(const std::string startID, const std::string destID, std::ostream& os); // ostream version for testing purposes
 
         // Creates a dot diagram to be used with graphviz for visualizing the graphs
         void toDOT(const std::string& filename) const;
 
+        // Returns the list containing the airport objects
+        std::vector<Airport> getAirports() const;
     private:
         size_t numVertices; // The current number of vertices in the graph.
         std::vector<std::list<Edge>> adjList; // the adjacency list containing the edges.

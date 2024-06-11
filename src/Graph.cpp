@@ -6,7 +6,6 @@
  */
 #include "../include/Graph.h"
 
-
 Graph::Graph(size_t numVertices)
     : numVertices(numVertices), adjList(numVertices) {}
 
@@ -138,10 +137,101 @@ void Graph::generateAirportGraph(const nlohmann::json& jsonData, const int thres
 }
 
 
-std::vector<Airport> Graph::findShortestPath(const Airport& start, const Airport& destination) const {
-    return {}; //stub
+std::vector<int> Graph::findShortestPath(const Airport& start, const Airport& destination) {
+    // Creating our minheap priority queue
+    std::priority_queue<iPair, std::vector<iPair>, std::greater<iPair>> pq;
+
+    std::vector<int> dist(numVertices, INT32_MAX); // dist will hold our distances set
+    
+    // array holding visited status of vertices
+    std::vector<bool> visited(numVertices, false);
+
+    // Hold previous vertices to current vertex
+    std::vector<int> prev(numVertices, -1);
+
+    // Dijkstra's Algorithm begins here (https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm)
+
+    // Initialize source distance and push to heap
+    int srcIdx = airportToIndex.at(start.id);
+    int destIdx = airportToIndex.at(destination.id);
+
+    pq.push(std::make_pair(0, srcIdx));
+    dist[srcIdx] = 0;
+
+    // Loop until heap is empty and distances are finalized
+    while (!pq.empty()) {
+        // Extract top
+        int u = pq.top().second;
+        pq.pop();
+
+        // Ensure we haven't visited current vertex already
+        if (visited[u]) {
+            continue;
+        }
+        visited[u] = true;
+
+        // Get all adjacent vertices to current vertex
+        for (const auto& edge : adjList[u]) {
+            int v = edge.dest;
+            int weight = edge.weight;
+
+            // Check for shorter path to v through u and update it if there is
+            if (dist[v] > dist[u] + weight) {
+                dist[v] = dist[u] + weight;
+                pq.push(std::make_pair(dist[v], v));
+                prev[v] = u;
+            }
+        }
+    }
+ 
+    // If heap was finished, check if there was a path to destination
+    if (dist[destIdx] == INT32_MAX) {
+        return {}; // return empty vector if there was no path
+    }
+
+    // Construct the path from start to destination
+    std::vector<int> path;
+
+    // iterate through prevs until beginning of path is reached
+    for (int at = destIdx; at != -1; at = prev[at]) {
+        path.push_back(at);
+    }
+
+    return path;
 }
 
+
+void Graph::printShortestPath(const std::string startID, const std::string destID) {
+    Airport startAirport = vertices[airportToIndex.at(startID)];
+    Airport destAirport = vertices[airportToIndex.at(destID)];
+    std::vector<int> res = findShortestPath(startAirport, destAirport);
+
+    // if there was no path, res should be an empty array
+    if (res.empty()) {
+    std::cout << "No path from " << startID << " to " << destID << std::endl;
+    }
+
+    // print the array in reverse to get start -> dest path
+    for (int i = res.size() - 1; i >= 0; i--) {
+        std::cout << vertices[res[i]].id << " ";
+    }
+}
+
+void Graph::printShortestPath(const std::string startID, const std::string destID, std::ostream& os) {
+    Airport startAirport = vertices[airportToIndex.at(startID)];
+    Airport destAirport = vertices[airportToIndex.at(destID)];
+    std::vector<int> res = findShortestPath(startAirport, destAirport);
+    
+    // if there was no path, res should be an empty array
+    if (res.empty()) {
+    os << "No path from " << startID << " to " << destID << std::endl;
+    }
+
+    // print the array in reverse to get start -> dest path
+    for (int i = res.size() - 1; i >= 0; i--) {
+        os << vertices[res[i]].id << " ";
+    }
+}
 
 void Graph::toDOT(const std::string& filename) const {
     std::ofstream file(filename);
@@ -156,4 +246,8 @@ void Graph::toDOT(const std::string& filename) const {
     }
     file << "}\n";
     file.close();
+}
+
+std::vector<Airport> Graph::getAirports() const {
+    return this->vertices;
 }

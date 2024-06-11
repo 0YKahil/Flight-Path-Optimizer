@@ -23,7 +23,7 @@ const int THRESHOLD = 280;
 int main() {
     // Read the json file into jsonData
     std::cout << "reading file... ";
-    std::ifstream file("./datasets/testairports.json");
+    std::ifstream file("./datasets/testairports_multi.json");
     nlohmann::json jsonData;
     file >> jsonData; // read the airports file into json object
     std::cout << "done" << std::endl;
@@ -47,5 +47,28 @@ int main() {
     std::cout << "done" << std::endl;
     std::cout << "time taken: " << ms_double.count() << "ms" << std::endl;
     g.printGraph();
+
+    std::vector<Airport> airports = g.getAirports();
+
+    std::cout << "\n\nAirport IDs available: \n";
+    for (auto ap : airports) {
+        std::cout << ap.id << ", ";
+    }
+    std::cout << std::endl;
+
+    Airport CYOW = airports[0];
+    Airport CYYZ = airports[2];
+
+    std::cout << "\n\n" << CYOW.id << " " << CYYZ.id << "\n\n";
+
+    std::vector<int> path_arr = g.findShortestPath(CYOW, CYYZ);
+
+    for (auto x : path_arr) {
+        std::cout << x << ", ";
+    }
+    std::cout << std::endl;
+
+
+    
 
 }

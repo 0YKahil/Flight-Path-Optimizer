@@ -153,4 +153,16 @@ TEST_CASE("Generate graph from airport json (MULTI airport, THRESHOLD = 100)") {
 }
 
 
+TEST_CASE("Print Shortest path from start to end on generated graph (MULTI airport THRESHOLD = 100)") {
+    std::ifstream file("./datasets/testairports_multi.json");
+    nlohmann::json jsonData;
+    file >> jsonData; 
 
+    Graph g(jsonData.size());
+    g.generateAirportGraph(jsonData, 100, false);
+    std::ostringstream output;
+    g.printShortestPath("CYYZ", "KIAG", output);
+
+    std::string expected = "CYYZ KIAG ";
+    REQUIRE(output.str() == expected);
+}
