@@ -4,13 +4,11 @@
  * 
  * Tests for Graph class
  */
-
-#define CATCH_CONFIG_MAIN
 #include <fstream>
 #include <iostream>
 #include "catch.hpp"
-#include "../include/Graph.h"
-#include "../include/Airport.h"
+#include "Graph.h"
+#include "Airport.h"
 
 TEST_CASE("Graph with 1 vertex") {
     size_t numAirports = 1;

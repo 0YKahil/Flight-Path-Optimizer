@@ -4,7 +4,7 @@
  * 
  * Implementation of graph ADT
  */
-#include "../include/Graph.h"
+#include "Graph.h"
 
 Graph::Graph(size_t numVertices)
     : numVertices(numVertices), adjList(numVertices) {}
@@ -214,8 +214,32 @@ std::pair<std::vector<int>, double> Graph::findShortestPath(const Airport& start
 
 
 void Graph::printShortestPath(const std::string startID, const std::string destID) {
-    Airport startAirport = vertices[airportToIndex.at(startID)];
-    Airport destAirport = vertices[airportToIndex.at(destID)];
+    Airport startAirport;
+    Airport destAirport;
+
+    // ENSURE AIRPORT IDs are valid
+    try
+    {
+        startAirport = vertices[airportToIndex.at(startID)];
+    }
+    catch(const std::exception& e)
+    {
+        std::cout << "\033[31m" << "'" << startID << "' IS NOT A VALID ID (did you forget to include the regional letter? (e.g. 'K'JFK or 'C'YYZ))" << '\n';
+        return; // exit the function if startID does not exist
+    }
+
+    try
+    {
+        destAirport = vertices[airportToIndex.at(destID)];
+    }
+    catch(const std::exception& e)
+    {
+        std::cout << "\033[31m" << "'" << destID << "' IS NOT A VALID ID (did you forget to include the regional letter? (e.g. 'K'JFK or 'C'YYZ))" << '\n';
+        return; 
+    }
+    
+    
+
     std::pair<std::vector<int>, double> res = findShortestPath(startAirport, destAirport);
 
     // if there was no path, res should be an empty array
@@ -225,30 +249,36 @@ void Graph::printShortestPath(const std::string startID, const std::string destI
     }
 
     // print the array in reverse to get start -> dest path
-    std::cout << "\nPATH FROM " << startID << " to " << destID << ":\n" << "\033[37m" << std::endl;
+    std::cout << "\nPATH FROM " << startID << " to " << destID << ":" << "\033[37m" << std::endl;
     for (int i = res.first.size() - 1; i >= 0; i--) {
         if (i != res.first.size() - 1) {
             std::cout << " -> ";
         }
         std::cout << vertices[res.first[i]].id;
     }
-    std::cout << "\033[33m" << "\nTotal distance: ~" << res.second << "nm" << std::endl;
+    std::cout << "\033[33m" << "\n\nTotal distance: ~" << res.second << "nm" << std::endl;
 }
 
+// Ostream version
 void Graph::printShortestPath(const std::string startID, const std::string destID, std::ostream& os) {
     Airport startAirport = vertices[airportToIndex.at(startID)];
     Airport destAirport = vertices[airportToIndex.at(destID)];
-    std::vector<int> res = findShortestPath(startAirport, destAirport).first;
-    
-    // if there was no path, res should be an empty array
-    if (res.empty()) {
-    os << "No path from " << startID << " to " << destID << std::endl;
-    }
+    std::pair<std::vector<int>, double> res = findShortestPath(startAirport, destAirport);
 
-    // print the array in reverse to get start -> dest path
-    for (int i = res.size() - 1; i >= 0; i--) {
-        os << vertices[res[i]].id << " ";
+    // if there was no path, res should be an empty array
+    if (res.first.empty()) {
+    os << "NO REACHABLE PATH FROM " << startID << " to " << destID << " BY AN AIRCRAFT WITH THE CURRENT RANGE" << std::endl;
+    return;
     }
+    // print the array in reverse to get start -> dest path
+    os << "\nPATH FROM " << startID << " to " << destID << ":\n" << "\033[37m" << std::endl;
+    for (int i = res.first.size() - 1; i >= 0; i--) {
+        if (i != res.first.size() - 1) {
+            os << " -> ";
+        }
+        os << vertices[res.first[i]].id;
+    }
+    os << "\033[33m" << "\nTotal distance: ~" << res.second << "nm" << std::endl;
 }
 
 void Graph::toDOT(const std::string& filename) const {

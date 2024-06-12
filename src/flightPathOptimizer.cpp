@@ -9,7 +9,7 @@
 #include <fstream>
 #include <iostream>
 #include <chrono>
-#include "../include/Graph.h"
+#include "Graph.h"
 
 
 // Color Escape codes
@@ -18,6 +18,7 @@
 #define RESET "\033[0m"
 #define WHITE   "\033[37m"
 #define BOLD    "\033[1m"
+#define RED     "\033[31m"
 
 /**
  * THRESHOLD will control the cutoff for the edge creation for the graph
@@ -27,6 +28,56 @@
  *       MAX range after calculating for fuel burning, wind, etc.
  */
 const int THRESHOLD = 450;
+
+
+// Function to check if a file exists
+bool fileExists(const std::string& filename) {
+    std::ifstream file(filename);
+    return file.good();
+}
+
+
+// Function to run the Python script based on user input
+void askAndRunPythonScript(const std::string& scriptPath, const std::string& jsonFilePath) {
+    // Check if the JSON file exists
+    if (!fileExists(jsonFilePath)) {
+        std::cout << "JSON file does not exist. Running Python script automatically." << std::endl;
+        std::string command = "python3 " + scriptPath;
+        int result = system(command.c_str());
+
+        if (result == 0) {
+            std::cout << "Python script executed successfully." << std::endl;
+        } else {
+            std::cerr << "Failed to execute Python script." << std::endl;
+        }
+        return;
+    }
+
+    char userInput;
+    while (true) {
+        std::cout << "Would you like to run the Python script? (y/n): ";
+        std::cin >> userInput;
+
+        if (userInput == 'y' || userInput == 'Y') {
+            std::string command = "python3 " + scriptPath;
+            int result = system(command.c_str());
+
+            if (result == 0) {
+                std::cout << "Python script executed successfully." << std::endl;
+            } else {
+                std::cerr << "Failed to execute Python script." << std::endl;
+            }
+            break; // Exit the loop after running the script
+        } else if (userInput == 'n' || userInput == 'N') {
+            std::cout << "Python script will not be run." << std::endl;
+            break; // Exit the loop if the user chooses not to run the script
+        } else {
+            std::cout << "Invalid input. Please enter 'y' or 'n'." << std::endl;
+        }
+    }
+}
+
+
 
 int main() {
     // Read the json file into jsonData

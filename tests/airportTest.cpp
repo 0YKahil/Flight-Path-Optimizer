@@ -4,10 +4,9 @@
  * 
  * Tests for Airport class
  */
-#define CATCH_CONFIG_MAIN
 #include <iostream>
 #include "catch.hpp"
-#include "../include/Airport.h"
+#include "Airport.h"
 
 double yowLat = 45.3225;
 double yowLon = -75.6692;

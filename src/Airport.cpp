@@ -5,7 +5,7 @@
  * Implementation of Airport Object
  */
 
-#include "../include/Airport.h"
+#include "Airport.h"
 
 
 // Earth's radius in nm
