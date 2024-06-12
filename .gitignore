@@ -16,3 +16,4 @@ _deps
 build
 *Test
 flightPathOptimizer
+dot_files/airports.dot

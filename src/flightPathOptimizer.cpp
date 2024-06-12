@@ -11,6 +11,14 @@
 #include <chrono>
 #include "../include/Graph.h"
 
+
+// Color Escape codes
+#define YELLOW "\033[33m"
+#define GREEN "\033[32m"
+#define RESET "\033[0m"
+#define WHITE   "\033[37m"
+#define BOLD    "\033[1m"
+
 /**
  * THRESHOLD will control the cutoff for the edge creation for the graph
  * and dictate when an edge will be made (distance between both locations <= THRESHOLD).
@@ -18,12 +26,12 @@
  * NOTE: This will typically be what you will change depending on the aircraft's
  *       MAX range after calculating for fuel burning, wind, etc.
  */
-const int THRESHOLD = 280;
+const int THRESHOLD = 450;
 
 int main() {
     // Read the json file into jsonData
     std::cout << "reading file... ";
-    std::ifstream file("./datasets/testairports_multi.json");
+    std::ifstream file("./datasets/airports.json");
     nlohmann::json jsonData;
     file >> jsonData; // read the airports file into json object
     std::cout << "done" << std::endl;
@@ -35,40 +43,30 @@ int main() {
 
     Graph g(jsonData.size());
     g.generateAirportGraph(jsonData, THRESHOLD, true);
-
-    auto t2 = std::chrono::high_resolution_clock::now();
+    std::cout << "done" << std::endl;
 
     // Creating visual dot file of graph found in ./dot_files/
     g.toDOT("./dot_files/airports.dot");
 
 
-    // Calculating time taken to generate the graph
+    // g.printGraph();
+
+    // std::vector<Airport> airports = g.getAirports();
+
+    // std::cout << "\n\nAirport IDs available: \n";
+    // for (auto ap : airports) {
+    //     std::cout << ap.id << ", ";
+    // }
+
+
+
+    std::cout << "\n\n" << BOLD << GREEN;
+    std::cout << "RANGE: " << THRESHOLD << "nm \n";
+    g.printShortestPath("CYOW", "CYVR");   
+    std::cout << RESET << std::endl; 
+
+    auto t2 = std::chrono::high_resolution_clock::now();
+    // Calculating time taken to finish
     std::chrono::duration<double, std::milli> ms_double = t2 - t1;
-    std::cout << "done" << std::endl;
-    std::cout << "time taken: " << ms_double.count() << "ms" << std::endl;
-    g.printGraph();
-
-    std::vector<Airport> airports = g.getAirports();
-
-    std::cout << "\n\nAirport IDs available: \n";
-    for (auto ap : airports) {
-        std::cout << ap.id << ", ";
-    }
-    std::cout << std::endl;
-
-    Airport CYOW = airports[0];
-    Airport CYYZ = airports[2];
-
-    std::cout << "\n\n" << CYOW.id << " " << CYYZ.id << "\n\n";
-
-    std::vector<int> path_arr = g.findShortestPath(CYOW, CYYZ);
-
-    for (auto x : path_arr) {
-        std::cout << x << ", ";
-    }
-    std::cout << std::endl;
-
-
-    
-
+    std::cout << GREEN << "\ntime taken: " << ms_double.count() << "ms" << RESET << std::endl;
 }

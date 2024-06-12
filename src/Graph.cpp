@@ -137,7 +137,19 @@ void Graph::generateAirportGraph(const nlohmann::json& jsonData, const int thres
 }
 
 
-std::vector<int> Graph::findShortestPath(const Airport& start, const Airport& destination) {
+std::pair<std::vector<int>, double> Graph::findShortestPath(const Airport& start, const Airport& destination) {
+    int total_distance = 0;
+
+    // Check for a direct flight first to avoid unneeded landings
+    int srcIdx = airportToIndex.at(start.id);
+    int destIdx = airportToIndex.at(destination.id);
+    for (const auto& edge : adjList[srcIdx]) {
+        if (edge.dest == destIdx) {
+            total_distance = edge.weight;
+            return {{srcIdx, destIdx}, total_distance};
+        }
+    }
+
     // Creating our minheap priority queue
     std::priority_queue<iPair, std::vector<iPair>, std::greater<iPair>> pq;
 
@@ -152,9 +164,6 @@ std::vector<int> Graph::findShortestPath(const Airport& start, const Airport& de
     // Dijkstra's Algorithm begins here (https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm)
 
     // Initialize source distance and push to heap
-    int srcIdx = airportToIndex.at(start.id);
-    int destIdx = airportToIndex.at(destination.id);
-
     pq.push(std::make_pair(0, srcIdx));
     dist[srcIdx] = 0;
 
@@ -189,6 +198,8 @@ std::vector<int> Graph::findShortestPath(const Airport& start, const Airport& de
         return {}; // return empty vector if there was no path
     }
 
+    total_distance = dist[destIdx];
+
     // Construct the path from start to destination
     std::vector<int> path;
 
@@ -197,30 +208,37 @@ std::vector<int> Graph::findShortestPath(const Airport& start, const Airport& de
         path.push_back(at);
     }
 
-    return path;
+
+    return {path, total_distance};
 }
 
 
 void Graph::printShortestPath(const std::string startID, const std::string destID) {
     Airport startAirport = vertices[airportToIndex.at(startID)];
     Airport destAirport = vertices[airportToIndex.at(destID)];
-    std::vector<int> res = findShortestPath(startAirport, destAirport);
+    std::pair<std::vector<int>, double> res = findShortestPath(startAirport, destAirport);
 
     // if there was no path, res should be an empty array
-    if (res.empty()) {
-    std::cout << "No path from " << startID << " to " << destID << std::endl;
+    if (res.first.empty()) {
+    std::cout << "NO REACHABLE PATH FROM " << startID << " to " << destID << " BY AN AIRCRAFT WITH THE CURRENT RANGE" << std::endl;
+    return;
     }
 
     // print the array in reverse to get start -> dest path
-    for (int i = res.size() - 1; i >= 0; i--) {
-        std::cout << vertices[res[i]].id << " ";
+    std::cout << "\nPATH FROM " << startID << " to " << destID << ":\n" << "\033[37m" << std::endl;
+    for (int i = res.first.size() - 1; i >= 0; i--) {
+        if (i != res.first.size() - 1) {
+            std::cout << " -> ";
+        }
+        std::cout << vertices[res.first[i]].id;
     }
+    std::cout << "\033[33m" << "\nTotal distance: ~" << res.second << "nm" << std::endl;
 }
 
 void Graph::printShortestPath(const std::string startID, const std::string destID, std::ostream& os) {
     Airport startAirport = vertices[airportToIndex.at(startID)];
     Airport destAirport = vertices[airportToIndex.at(destID)];
-    std::vector<int> res = findShortestPath(startAirport, destAirport);
+    std::vector<int> res = findShortestPath(startAirport, destAirport).first;
     
     // if there was no path, res should be an empty array
     if (res.empty()) {

@@ -77,7 +77,7 @@ class Graph {
          * @param start The starting Airport
          * @param destination The destination Airport
          */
-        std::vector<int> findShortestPath(const Airport& start, const Airport& destination);
+        std::pair <std::vector<int>, double> findShortestPath(const Airport& start, const Airport& destination);
 
         /**
          * Converts startID and destID to their corresponding airports, and 
