@@ -22,6 +22,13 @@
 
 typedef std::pair<int, int> iPair;
 
+#define YELLOW "\033[33m"
+#define GREEN "\033[32m"
+#define RESET "\033[0m"
+#define WHITE   "\033[37m"
+#define BOLD    "\033[1m"
+#define RED     "\033[31m"
+
 /**
  * @class Graph 
  * Represents a Graph of airports represented by an adjacency list of airports.
@@ -95,6 +102,10 @@ class Graph {
 
         // Returns the list containing the airport objects
         std::vector<Airport> getAirports() const;
+
+        // returns true if airport code is valid (in the airport graph); false otherwise
+        bool isValidAirport(const std::string& code) const;
+        
     private:
         size_t numVertices; // The current number of vertices in the graph.
         std::vector<std::list<Edge>> adjList; // the adjacency list containing the edges.

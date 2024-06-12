@@ -23,8 +23,16 @@ void askRunScript(const std::string& scriptPath, const std::string& jsonFilePath
 
 /**
  * Simple Yes no prompt that asks the user a yes no question.
+ * Return true if yes was answered; false otherwise.
  * 
  * @param question The question prompt for the user.
  */
 bool prompt(const std::string& question);
 
+
+/**
+ * Converts a string to uppercase and returns it
+ * 
+ * @param str The string to be converted to uppercase
+ */
+std::string toUpperCase(std::string str);

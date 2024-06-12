@@ -4,7 +4,6 @@
  * 
  * Implementation of the utility functions
  */
-
 #include "utility_functions.h"
 #include <iostream>
 #include <cstdlib>
@@ -40,6 +39,7 @@ void askRunScript(const std::string& scriptPath, const std::string& jsonFilePath
 
         if (userInput == 'y' || userInput == 'Y') {
             std::string runCommand = "python3 " + scriptPath;
+            std::cout << runCommand << std::endl;
             int result = system(runCommand.c_str());
 
             if (result == 0) {
@@ -73,4 +73,10 @@ bool prompt(const std::string& question) {
             std::cout << "Invalid input. Please enter 'y' or 'n'." << std::endl;
         }
     }
+}
+
+std::string toUpperCase(std::string str) {
+    std::string out;
+    for (auto& c : str) out += toupper(c);
+    return out;
 }

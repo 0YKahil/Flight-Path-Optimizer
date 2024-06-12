@@ -82,11 +82,11 @@ def main():
     # Write the data to a JSON file
     output_dir = './datasets'
     os.makedirs(output_dir, exist_ok=True)
-    output_path = os.path.join(output_dir, 'global_airports.json')
+    output_path = os.path.join(output_dir, 'airports.json')
     try: 
         with open(output_path, 'w') as file:
-            json.dump(airports_data, file, indent=4)
-        print('Data written to global_airports.json')
+            json.dump(ap_filt, file, indent=4)
+        print('Data written to airports.json')
     except:
         print("Exception occured while writing JSON file to directory")
 

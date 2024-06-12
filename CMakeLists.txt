@@ -28,7 +28,8 @@ set(graphtests
 set(main
     ${CMAKE_SOURCE_DIR}/src/Airport.cpp
     ${CMAKE_SOURCE_DIR}/src/Graph.cpp
-    ${CMAKE_SOURCE_DIR}/src/flightPathOptimizer.cpp
+    ${CMAKE_SOURCE_DIR}/src/utility_functions.cpp
+    ${CMAKE_SOURCE_DIR}/src/FlightPathOptimizer.cpp
 )
 
 # Add executables

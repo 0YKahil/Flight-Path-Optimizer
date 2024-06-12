@@ -224,8 +224,7 @@ void Graph::printShortestPath(const std::string startID, const std::string destI
     }
     catch(const std::exception& e)
     {
-        std::cout << "\033[31m" << "'" << startID << "' IS NOT A VALID ID (did you forget to include the regional letter? e.g. 'K'JFK or 'C'YYZ)" << '\n';
-        return; // exit the function if startID does not exist
+        std::cout << RED << "'" << startID << "' IS NOT A VALID ID\n";
     }
 
     try
@@ -234,22 +233,20 @@ void Graph::printShortestPath(const std::string startID, const std::string destI
     }
     catch(const std::exception& e)
     {
-        std::cout << "\033[31m" << "'" << destID << "' IS NOT A VALID ID (did you forget to include the regional letter? e.g. 'K'JFK or 'C'YYZ)" << '\n';
+        std::cout << RED << "'" << destID << "' IS NOT A VALID ID\n";
         return; 
     }
     
-    
-
     std::pair<std::vector<int>, double> res = findShortestPath(startAirport, destAirport);
 
     // if there was no path, res should be an empty array
     if (res.first.empty()) {
-    std::cout << "NO REACHABLE PATH FROM " << startID << " to " << destID << " BY AN AIRCRAFT WITH THE CURRENT RANGE" << std::endl;
+    std::cout << RED << "NO REACHABLE PATH FROM " << startID << " to " << destID << " BY AN AIRCRAFT WITH THE CURRENT RANGE\n" << std::endl;
     return;
     }
 
     // print the array in reverse to get start -> dest path
-    std::cout << "\nPATH FROM " << startID << " to " << destID << ":" << "\033[37m" << std::endl;
+    std::cout << GREEN << "\nPATH FROM " << startID << " to " << destID << ":" << RESET << std::endl;
     for (int i = res.first.size() - 1; i >= 0; i--) {
         if (i != res.first.size() - 1) {
             std::cout << " -> ";
@@ -278,7 +275,7 @@ void Graph::printShortestPath(const std::string startID, const std::string destI
         }
         os << vertices[res.first[i]].id;
     }
-    os << "\033[33m" << "\nTotal distance: ~" << res.second << "nm" << std::endl;
+    os << "\033[33m" << "\nTotal Distance: ~" << res.second << "nm" << std::endl;
 }
 
 void Graph::toDOT(const std::string& filename) const {
@@ -298,4 +295,13 @@ void Graph::toDOT(const std::string& filename) const {
 
 std::vector<Airport> Graph::getAirports() const {
     return this->vertices;
+}
+
+bool Graph::isValidAirport(const std::string& code) const {
+    try {
+        Airport check = vertices[airportToIndex.at(code)];
+        return true;
+    } catch (...) {
+        return false;
+    }
 }

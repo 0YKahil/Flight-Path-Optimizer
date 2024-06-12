@@ -11,9 +11,10 @@ compile_commands.json
 CTestTestfile.cmake
 _deps
 
-#exe's
+#exe's and other files
 .vscode
 build
 *Test
 flightPathOptimizer
 dot_files/airports.dot
+testing.cpp
