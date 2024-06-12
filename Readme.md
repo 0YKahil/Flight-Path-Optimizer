@@ -36,10 +36,31 @@ using the Haversine formula https://en.wikipedia.org/wiki/Haversine_formula
 
 ## Requirements
 
-- To be added
+- Visual C++ Redistributable
+
+
+- **For source code version compiling** Python3.X, Cmake3.10+, and a C++ compiler (GNU was used for this project but others should work).
 
 ## Usage
+### **NON-UI Source Code Version (Usage through console/terminal)**
+It is **not recommended** to use this version if you do not know what you are doing as it is mainly run using a terminal or command prompt (need GNUWin32 on windows)
+1. Clone the repository into the desired directory
 
+2. Navigate to the directory and enter "cmake ." into your command prompt or terminal to automatically configure and build the project based on the premade CMakeLists.txt
+3. Run the program using "./flightPathOptimizer" and proceed with the instructions"
+
+4. Allow the fetching script to run automatically to create the data file, then **enter the range of your aircraft after flight conditions considerations**.
+
+5. Enter the **full ICAO** or Identifier code (Which mean include the region identifying letter 'C' for canadian airports, 'K' for US airports, etc.)
+![Alt text](img/enter_airports.png)
+
+6. The code should now run and give you the **optimal and most efficient path** to reach your inputted destination.
+![alt text](img/result.png)
+
+
+
+### **Non-Graphic UI version**
 - To be added
 
-
+### **Graphic UI version**
+- To be added

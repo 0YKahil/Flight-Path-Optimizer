@@ -65,7 +65,7 @@ int main() {
 
     // MAIN LOOP
     while (true) {
-        std::cout << "\n\nEnter the FULL identifier code for the STARTING airport (e.g. CYOW not YOW) (or 'exit' to quit): \n> ";
+        std::cout << YELLOW << "\n\nEnter the FULL identifier code for the STARTING airport (e.g. CYOW not YOW) (or 'exit' to quit): \n> " << RESET;
         std::cin >> lstartID;
 
         std::string startID = toUpperCase(lstartID);
@@ -77,7 +77,7 @@ int main() {
             continue;
         }
 
-        std::cout << "Enter the FULL identifier code for the DESTINATION airport (e.g. CYOW not YOW): \n> ";
+        std::cout << YELLOW << "Enter the FULL identifier code for the DESTINATION airport: \n> " << RESET;
         std::cin >> ldestID;
         std::string destID = toUpperCase(ldestID);
         if (destID == "EXIT") break;
