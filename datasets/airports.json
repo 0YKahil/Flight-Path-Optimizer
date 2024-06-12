@@ -1770,6 +1770,16 @@
         "icao": "CYOJ"
     },
     {
+        "ident": "CYOO",
+        "name": "Oshawa Executive Airport",
+        "type": "medium_airport",
+        "latitude": "43.922798",
+        "longitude": "-78.894997",
+        "continent": "NA",
+        "iata": "YOO",
+        "icao": "CYOO"
+    },
+    {
         "ident": "CYOP",
         "name": "Rainbow Lake Airport",
         "type": "medium_airport",

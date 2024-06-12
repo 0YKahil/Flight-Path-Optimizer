@@ -60,5 +60,4 @@ class Edge {
         return false;
     }
 
-
 };
