@@ -224,7 +224,7 @@ void Graph::printShortestPath(const std::string startID, const std::string destI
     }
     catch(const std::exception& e)
     {
-        std::cout << "\033[31m" << "'" << startID << "' IS NOT A VALID ID (did you forget to include the regional letter? (e.g. 'K'JFK or 'C'YYZ))" << '\n';
+        std::cout << "\033[31m" << "'" << startID << "' IS NOT A VALID ID (did you forget to include the regional letter? e.g. 'K'JFK or 'C'YYZ)" << '\n';
         return; // exit the function if startID does not exist
     }
 
@@ -234,7 +234,7 @@ void Graph::printShortestPath(const std::string startID, const std::string destI
     }
     catch(const std::exception& e)
     {
-        std::cout << "\033[31m" << "'" << destID << "' IS NOT A VALID ID (did you forget to include the regional letter? (e.g. 'K'JFK or 'C'YYZ))" << '\n';
+        std::cout << "\033[31m" << "'" << destID << "' IS NOT A VALID ID (did you forget to include the regional letter? e.g. 'K'JFK or 'C'YYZ)" << '\n';
         return; 
     }
     

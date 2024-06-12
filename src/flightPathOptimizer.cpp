@@ -10,6 +10,7 @@
 #include <iostream>
 #include <chrono>
 #include "Graph.h"
+#include "utility_functions.h"
 
 
 // Color Escape codes
@@ -30,59 +31,16 @@
 const int THRESHOLD = 450;
 
 
-// Function to check if a file exists
-bool fileExists(const std::string& filename) {
-    std::ifstream file(filename);
-    return file.good();
-}
-
-
-// Function to run the Python script based on user input
-void askAndRunPythonScript(const std::string& scriptPath, const std::string& jsonFilePath) {
-    // Check if the JSON file exists
-    if (!fileExists(jsonFilePath)) {
-        std::cout << "JSON file does not exist. Running Python script automatically." << std::endl;
-        std::string command = "python3 " + scriptPath;
-        int result = system(command.c_str());
-
-        if (result == 0) {
-            std::cout << "Python script executed successfully." << std::endl;
-        } else {
-            std::cerr << "Failed to execute Python script." << std::endl;
-        }
-        return;
-    }
-
-    char userInput;
-    while (true) {
-        std::cout << "Would you like to run the Python script? (y/n): ";
-        std::cin >> userInput;
-
-        if (userInput == 'y' || userInput == 'Y') {
-            std::string command = "python3 " + scriptPath;
-            int result = system(command.c_str());
-
-            if (result == 0) {
-                std::cout << "Python script executed successfully." << std::endl;
-            } else {
-                std::cerr << "Failed to execute Python script." << std::endl;
-            }
-            break; // Exit the loop after running the script
-        } else if (userInput == 'n' || userInput == 'N') {
-            std::cout << "Python script will not be run." << std::endl;
-            break; // Exit the loop if the user chooses not to run the script
-        } else {
-            std::cout << "Invalid input. Please enter 'y' or 'n'." << std::endl;
-        }
-    }
-}
-
-
-
 int main() {
+    std::string filepath = "./datasets/airports.json";
+    std::string fetchScriptpath = "./scripts/fetchAirportData.py";
+
+    // Ask to update the json dataset
+    askRunScript(filepath, fetchScriptpath);
+
     // Read the json file into jsonData
     std::cout << "reading file... ";
-    std::ifstream file("./datasets/airports.json");
+    std::ifstream file(filepath);
     nlohmann::json jsonData;
     file >> jsonData; // read the airports file into json object
     std::cout << "done" << std::endl;
@@ -107,14 +65,15 @@ int main() {
     // for (auto ap : airports) {
     //     std::cout << ap.id << ", ";
     // }
-
     // Allow user to input through the console
-    std::string id1;
-    std::string id2;
+    
+    // User input for starting and destination airport ids
+    std::string startID;
+    std::string destID;
     std::cout << "Enter the FULL identifier code for the STARTING airport (e.g. CYOW not YOW): \n> ";
-    std::cin >> id1;
+    std::cin >> startID;
     std::cout << "Enter the FULL identifier code for the DESTINATION airport (e.g. CYOW not YOW): \n> ";
-    std::cin >> id2;
+    std::cin >> destID;
 
 
 
@@ -122,8 +81,8 @@ int main() {
 
     // Display the Path
     std::cout << "\n\n" << BOLD << GREEN;
-    std::cout << "RANGE: " << THRESHOLD << "nm \n";
-    g.printShortestPath(id1, id2);   
+    std::cout << "RANGE: " << THRESHOLD << "nm \n" << RESET;
+    g.printShortestPath(startID, destID);
     std::cout << RESET << std::endl; 
 
 

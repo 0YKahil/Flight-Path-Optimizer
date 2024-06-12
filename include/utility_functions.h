@@ -19,7 +19,7 @@ bool fileExists(const std::string& filename);
  * @param scriptPath The path to the desired python script.
  * @param jsonFilePath The desired path for the json file (this should be the data folder for the program).
  */
-void askAndRunPythonScript(const std::string& scriptPath, const std::string& jsonFilePath);
+void askRunScript(const std::string& scriptPath, const std::string& jsonFilePath);
 
 /**
  * Simple Yes no prompt that asks the user a yes no question.
