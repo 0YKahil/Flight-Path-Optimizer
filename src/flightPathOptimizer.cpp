@@ -39,7 +39,6 @@ int main() {
     // Creating AirportGraph
 
     std::cout << "generating airport graph... ";
-    auto t1 = std::chrono::high_resolution_clock::now();
 
     Graph g(jsonData.size());
     g.generateAirportGraph(jsonData, THRESHOLD, true);
@@ -58,14 +57,27 @@ int main() {
     //     std::cout << ap.id << ", ";
     // }
 
+    // Allow user to input through the console
+    std::string id1;
+    std::string id2;
+    std::cout << "Enter the FULL identifier code for the STARTING airport (e.g. CYOW not YOW): \n> ";
+    std::cin >> id1;
+    std::cout << "Enter the FULL identifier code for the DESTINATION airport (e.g. CYOW not YOW): \n> ";
+    std::cin >> id2;
 
 
+
+    auto t1 = std::chrono::high_resolution_clock::now();
+
+    // Display the Path
     std::cout << "\n\n" << BOLD << GREEN;
     std::cout << "RANGE: " << THRESHOLD << "nm \n";
-    g.printShortestPath("CYOW", "CYVR");   
+    g.printShortestPath(id1, id2);   
     std::cout << RESET << std::endl; 
 
+
     auto t2 = std::chrono::high_resolution_clock::now();
+
     // Calculating time taken to finish
     std::chrono::duration<double, std::milli> ms_double = t2 - t1;
     std::cout << GREEN << "\ntime taken: " << ms_double.count() << "ms" << RESET << std::endl;
