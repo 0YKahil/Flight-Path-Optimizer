@@ -146,7 +146,8 @@ std::pair<std::vector<int>, double> Graph::findShortestPath(const Airport& start
     for (const auto& edge : adjList[srcIdx]) {
         if (edge.dest == destIdx) {
             total_distance = edge.weight;
-            return {{srcIdx, destIdx}, total_distance};
+            // Return the list in reverse for the reverse printing function
+            return {{destIdx, srcIdx}, total_distance};
         }
     }
 
@@ -267,15 +268,15 @@ void Graph::printShortestPath(const std::string startID, const std::string destI
     os << "NO REACHABLE PATH FROM " << startID << " to " << destID << " BY AN AIRCRAFT WITH THE CURRENT RANGE" << std::endl;
     return;
     }
+
     // print the array in reverse to get start -> dest path
-    os << "\nPATH FROM " << startID << " to " << destID << ":\n" << "\033[37m" << std::endl;
+    os << "\nPATH FROM " << startID << " to " << destID << ":" << std::endl;
     for (int i = res.first.size() - 1; i >= 0; i--) {
         if (i != res.first.size() - 1) {
             os << " -> ";
         }
         os << vertices[res.first[i]].id;
     }
-    os << "\033[33m" << "\nTotal Distance: ~" << res.second << "nm" << std::endl;
 }
 
 void Graph::toDOT(const std::string& filename) const {

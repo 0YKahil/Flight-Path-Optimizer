@@ -10,10 +10,12 @@
 #include "Graph.h"
 #include "Airport.h"
 
+Airport a1("YOW", "Ottawa", "medium_airport", 45.3225, -75.6692);
+Airport a2("JFK", "New York", "large_airport", 40.6413, -73.7781);
+Airport a3("LAX", "Los Angeles", "large_airport", 33.9416, -118.4085);
+
 TEST_CASE("Graph with 1 vertex") {
     size_t numAirports = 1;
-
-    Airport a1("YOW", "Ottawa", "medium_airport", 45.3225, -75.6692);
 
     Graph g(numAirports);
     g.addVertex(a1);
@@ -28,10 +30,6 @@ TEST_CASE("Graph with 1 vertex") {
 
 TEST_CASE("Graph with multiple vertices and edges") {
     size_t numAirports = 3;
-
-    Airport a1("YOW", "Ottawa", "medium_airport", 45.3225, -75.6692);
-    Airport a2("JFK", "New York", "large_airport", 40.6413, -73.7781);
-    Airport a3("LAX", "Los Angeles", "large_airport", 33.9416, -118.4085);
 
     Graph g(numAirports);
     g.addVertex(a1);
@@ -55,8 +53,6 @@ TEST_CASE("Graph with multiple vertices and edges") {
 
 TEST_CASE("Graph handles self-loop") {
     size_t numAirports = 1;
-
-    Airport a1("YOW", "Ottawa", "medium_airport", 45.3225, -75.6692);
 
     Graph g(numAirports);
     g.addVertex(a1);
@@ -150,8 +146,21 @@ TEST_CASE("Generate graph from airport json (MULTI airport, THRESHOLD = 100)") {
     REQUIRE(output.str() == expected);
 }
 
+TEST_CASE("find and print Shortest path NO PATH EXISTS") {
+    std::ifstream file("./datasets/testairports_multi.json");
+    nlohmann::json jsonData;
+    file >> jsonData; 
 
-TEST_CASE("Print Shortest path from start to end on generated graph (MULTI airport THRESHOLD = 100)") {
+    Graph g(jsonData.size());
+    g.generateAirportGraph(jsonData, 100, false);
+    std::ostringstream output;
+    g.printShortestPath("CYYZ", "CYOW", output);
+
+    std::string expected = "NO REACHABLE PATH FROM CYYZ to CYOW BY AN AIRCRAFT WITH THE CURRENT RANGE\n";
+    REQUIRE(output.str() == expected);
+}
+
+TEST_CASE("find and print Shortest path from start to end on generated graph (MULTI airport THRESHOLD = 100)") {
     std::ifstream file("./datasets/testairports_multi.json");
     nlohmann::json jsonData;
     file >> jsonData; 
@@ -161,6 +170,22 @@ TEST_CASE("Print Shortest path from start to end on generated graph (MULTI airpo
     std::ostringstream output;
     g.printShortestPath("CYYZ", "KIAG", output);
 
-    std::string expected = "CYYZ KIAG ";
+    std::string expected = "\nPATH FROM CYYZ to KIAG:\n"
+                            "CYYZ -> KIAG";
+    REQUIRE(output.str() == expected);
+}
+
+TEST_CASE("find and print Shortest path from start to end on generated graph (MULTI airport THRESHOLD = 250)") {
+    std::ifstream file("./datasets/testairports_multi.json");
+    nlohmann::json jsonData;
+    file >> jsonData; 
+
+    Graph g(jsonData.size());
+    g.generateAirportGraph(jsonData, 250, false);
+    std::ostringstream output;
+    g.printShortestPath("KCLE", "CYOW", output);
+
+    std::string expected = "\nPATH FROM KCLE to CYOW:\n"
+                            "KCLE -> KIAG -> CYOW";
     REQUIRE(output.str() == expected);
 }

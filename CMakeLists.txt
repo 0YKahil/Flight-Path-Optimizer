@@ -33,7 +33,7 @@ set(main
 )
 
 # Add executables
-#add_executable(edgeTest ${edgetests})
-#add_executable(airportTest ${airporttests})
-#add_executable(graphTest ${graphtests})
+# add_executable(edgeTest ${edgetests})
+add_executable(airportTest ${airporttests})
+add_executable(graphTest ${graphtests})
 add_executable(flightPathOptimizer ${main})
