@@ -382,14 +382,15 @@ void Graph::printShortestPath(const std::string startID, const std::string destI
 
     }
     // print the array in reverse to get start -> dest path
-    std::cout << GREEN << "\nPATH FROM " << startID << " to " << destID << ":" << RESET << std::endl;
+    std::cout << GREEN << "\nPath from " << startID << " to " << destID << ":" << RESET << std::endl;
+    std::cout << WHITE;
     for (int i = (int)res.first.size() - 1; i >= 0; i--) {
         if (i != res.first.size() - 1) {
             std::cout << " -> ";
         }
         std::cout << vertices[res.first[i]].id;
     }
-    std::cout << "\033[33m" << "\n\nTotal distance: ~" << res.second << "nm" << std::endl;
+    std::cout << RESET << GREEN << "\n\nTotal distance: ~" << res.second << "nm" << std::endl; // "\033[33m"
 }
 
 // Ostream version

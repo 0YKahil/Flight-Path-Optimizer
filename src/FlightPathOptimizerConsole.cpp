@@ -74,7 +74,7 @@ void findPathAction(int mode) {
 
     // MAIN LOOP
     while (true) {
-        std::cout << YELLOW << "Enter the STARTING airport's FULL identifier (e.g. CYOW not YOW) (or 'exit' to quit): \n> " << RESET;
+        std::cout << GREEN << "Enter the STARTING airport's FULL identifier (e.g. CYOW not YOW) (or 'exit' to quit): \n> " << RESET;
         std::cin >> lstartID;
 
         std::string startID = toUpperCase(lstartID);
@@ -87,7 +87,7 @@ void findPathAction(int mode) {
             continue;
         }
 
-        std::cout << YELLOW << "Enter the DESTINATION airport's FULL identifier: \n> " << RESET;
+        std::cout << GREEN << "Enter the DESTINATION airport's FULL identifier: \n> " << RESET;
         std::cin >> ldestID;
         std::string destID = toUpperCase(ldestID);
         if (destID == "EXIT") break;
@@ -146,8 +146,6 @@ void menuAction(int selection) {
 
 int main() {
     runScript(dataFilepath);
-    std::cout << "Press any key to return to the menu...";  // Prompt user to press any key to return to the menu
-    _getch();
 
     std::vector<std::string> menuItems = {
         " Flight Path Optimizer (use arrow keys for selection) ",

@@ -66,12 +66,12 @@ std::string getExecutableDirectory() {
 void runScript(const std::string& jsonFilePath) {
     // Check if the file already exists, automatically run script if it doesn't
     if (!fileExists(jsonFilePath)) {
-        std::string directory = getExecutableDirectory(); // get current directory
+        std::string dir = getExecutableDirectory(); // get current directory
 
         std::cout << jsonFilePath << " does not exist. Fetching airport data automatically." << std::endl;
 
         // Construct path to script batch file
-        std::string runCommand = directory + "\\scripts\\runFetchAirportData.bat";
+        std::string runCommand = dir + "\\scripts\\fetchAirportData.exe";
         int result = system(runCommand.c_str()); // run the script
 
         if (result == 0) {
