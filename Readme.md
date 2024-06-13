@@ -2,12 +2,16 @@
 
 Flight Path Optimizer calculates the shortest route for a limited plane's range using Dijkstra's algorithm. The program fetches airport data from OurAirports API, calculates the great circle distances (orthodromic distance) between all pairs of airports that fit the given needs, and creates a graph with airports as nodes and requirement matching distances as edges, then outputs the shortest path to the destination of choice.
 
+This Project was made **with the advising of a Licensed Pilot** and the routes are tested and ensured to be the most optimal routes without unnecessary stops or landings that waste time
 
-This project uses a modifiable **Threshold** ([see here](#Threshold)) when creating paths representing the realistic range of the aircraft to remove unreachable paths.
 
-For example, while the max range is 650nm, a realistic range for the Cesna 172 is 400nm , so the program will set a 400nm **threshold** which can be modified if needed.
+This project uses a modifiable **Threshold** ([see here](#Threshold)) when creating paths representing **the realistic range of the aircraft** to remove any unreachable paths.
 
-**Change THRESHOLD VARIABLE in flightpathOptimizer.cpp to change the max range** (TO BE CHANGED)
+For example, while the max range is 650nm, a realistic range for the Cesna 172 is around 400nm , so the program will set a 400nm **threshold** which can be modified if needed.
+
+~~**Change THRESHOLD VARIABLE in flightpathOptimizer.cpp to change the max range** (TO BE CHANGED)~~<br>
+
+**THRESHOLD can be changed at the beginning of the program by inputting the aircrafts range when prompted**
 
 ## Features
 
@@ -64,3 +68,13 @@ It is **not recommended** to use this version if you do not know what you are do
 
 ### **Graphic UI version**
 - To be added
+
+
+<br><br>
+
+# Changelog
+### v1.0.0 - 11 June 2024
+- Initial Working Program
+
+### v1.0.1 - 12 June 2024
+- **Important Change**: Updated the algorithm to check for a direct flight from the current airport after every landing
