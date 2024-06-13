@@ -18,6 +18,13 @@
 // Returns true if a file already exists in the director; false otherwise.
 bool fileExists(const std::string& filename);
 
+/**
+ * Returns the current directory of program and return it
+ * as a string.
+ */
+std::string getExecutableDirectory();
+
+
 /** 
  * Prompts the user if they would like to run a specific json file python script
  * if the json file does not exist, then it automatically runs the script.
@@ -26,6 +33,9 @@ bool fileExists(const std::string& filename);
  * @param jsonFilePath The desired path for the json file (this should be the data folder for the program).
  */
 void askRunScript(const std::string& scriptPath, const std::string& jsonFilePath);
+
+// Runs the script if the file is not found automatically
+void runScript(const std::string& jsonFilePath);
 
 /**
  * Simple Yes no prompt that asks the user a yes no question.

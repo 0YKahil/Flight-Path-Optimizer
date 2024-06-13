@@ -56,6 +56,33 @@ void askRunScript(const std::string& scriptPath, const std::string& jsonFilePath
     
 }
 
+std::string getExecutableDirectory() {
+    char buffer[MAX_PATH];
+    GetModuleFileNameA(NULL, buffer, MAX_PATH);
+    std::string::size_type pos = std::string(buffer).find_last_of("\\/");
+    return std::string(buffer).substr(0, pos);
+}
+
+void runScript(const std::string& jsonFilePath) {
+    // Check if the file already exists, automatically run script if it doesn't
+    if (!fileExists(jsonFilePath)) {
+        std::string directory = getExecutableDirectory(); // get current directory
+
+        std::cout << jsonFilePath << " does not exist. Fetching airport data automatically." << std::endl;
+
+        // Construct path to script batch file
+        std::string runCommand = directory + "\\scripts\\runFetchAirportData.bat";
+        int result = system(runCommand.c_str()); // run the script
+
+        if (result == 0) {
+            std::cout << "Script executed successfully." << std::endl;
+        }
+        else {
+            std::cerr << "Failed to execute script." << std::endl;
+        }
+        return;
+    }
+}
 
 bool prompt(const std::string& question) {
     char input;
@@ -90,9 +117,10 @@ int promptRange() {
         std::cin.clear();
         std::cin.ignore((std::numeric_limits<std::streamsize>::max)(), '\n'); // skip invalid input
         system("cls");
-        std::cout << "\033[31m" << "Not a valid inout. Please enter a Number: \n> " << "\033[0m";
+        std::cout << "\033[31m" << "Not a valid input. Please enter a Number: \n> " << "\033[0m";
         std::cin >> input;
     }
 
     return input;
 }
+
