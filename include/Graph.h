@@ -28,6 +28,7 @@ typedef std::pair<int, int> iPair;
 #define WHITE   "\033[37m"
 #define BOLD    "\033[1m"
 #define RED     "\033[31m"
+#define CYAN "\033[36m"
 
 /**
  * @class Graph 

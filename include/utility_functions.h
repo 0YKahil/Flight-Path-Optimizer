@@ -7,6 +7,12 @@
 
 #pragma once
 #include <string>
+#include <fstream>
+#include <iostream>
+#include <limits>
+#include <chrono>
+#include <windows.h>
+#include <conio.h>
 
 
 // Returns true if a file already exists in the director; false otherwise.
@@ -36,3 +42,9 @@ bool prompt(const std::string& question);
  * @param str The string to be converted to uppercase
  */
 std::string toUpperCase(std::string str);
+
+/**
+ * Prompts for user entered aircraft range
+ * and returns it if it is valid
+ */
+int promptRange();
