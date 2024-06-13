@@ -1,0 +1,78 @@
+
+FlightPa.128172af/
+
+# User-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Mono Auto Generated Files
+mono_crash.*
+
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+
+# .NET build folders
+*.vs/
+# This is generated when a .NET project is built
+**/bin/
+**/obj/
+
+# msbuild logs
+msbuild.log
+msbuild*.log
+
+# Windows image file caches
+Thumbs.db
+ehthumbs.db
+
+# Folder config file
+.vscode/
+.vscode/*
+
+# Rider files
+.idea/
+
+# ReSharper
+_ReSharper.Caches/
+
+# Packages
+!packages/packages.config
+**/[Pp]ackages/*
+
+# npm cache
+**/node_modules/
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.swp
+
+# Project dependency caches
+**/.cache/
+
+# JetBrains Rider
+.idea/
+
+# Ignore folders that should not be pushed to the repository
+dist/
+build/
+
+# Ignore any folder named "build" anywhere in the repository
+**/build/
+
+# Ignore any folder named "dist" anywhere in the repository
+**/dist/
