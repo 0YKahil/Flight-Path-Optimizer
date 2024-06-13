@@ -180,7 +180,20 @@ std::pair<std::vector<int>, double> Graph::findShortestPath(const Airport& start
         }
         visited[u] = true;
 
-        // Get all adjacent vertices to current vertex
+        // Check for a direct flight from the current vertex to the destination
+        for (const auto& edge : adjList[u]) {
+            if (edge.dest == destIdx) {
+                total_distance = dist[u] + edge.weight;
+                std::vector<int> path;
+                path.push_back(destIdx);
+                for (int at = u; at != -1; at = prev[at]) {
+                    path.push_back(at);
+                }
+                return {path, total_distance};
+            }
+        }
+
+        // If destination is still too far, get all adjacent vertices to current vertex
         for (const auto& edge : adjList[u]) {
             int v = edge.dest;
             int weight = edge.weight;
