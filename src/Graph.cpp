@@ -336,7 +336,7 @@ std::pair<std::vector<int>, double> Graph::findShortestPathMIN(const Airport& st
 }
 
 
-void Graph::printShortestPath(const std::string startID, const std::string destID) {
+void Graph::printShortestPath(const std::string startID, const std::string destID, int mode) {
     Airport startAirport;
     Airport destAirport;
 
@@ -368,6 +368,19 @@ void Graph::printShortestPath(const std::string startID, const std::string destI
     return;
     }
 
+    // If mode 1 is selected, print the route using the names of the airport
+    if (mode == 1) {
+            std::cout << GREEN << "\nPATH FROM " << startID << " to " << destID << ":" << RESET << std::endl;
+        for (int i = res.first.size() - 1; i >= 0; i--) {
+            if (i != res.first.size() - 1) {
+                std::cout << " -> ";
+            }
+            std::cout << vertices[res.first[i]].name;
+        }
+        std::cout << "\033[33m" << "\n\nTotal distance: ~" << res.second << "nm" << std::endl;
+        return;
+
+    }
     // print the array in reverse to get start -> dest path
     std::cout << GREEN << "\nPATH FROM " << startID << " to " << destID << ":" << RESET << std::endl;
     for (int i = res.first.size() - 1; i >= 0; i--) {

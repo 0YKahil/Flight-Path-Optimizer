@@ -95,8 +95,9 @@ class Graph {
          * 
          * @param startID The id of the starting Airport (e.g. CYYZ, CYOW)
          * @param destID The id of the destination Airport
+         * @param mode 0 prints the path using the airports icao, 1 will print the path using the airport names; otherwise defaults to icao
          */
-        void printShortestPath(const std::string startID, const std::string destID);
+        void printShortestPath(const std::string startID, const std::string destID, int mode = 0);
         void printShortestPath(const std::string startID, const std::string destID, std::ostream& os); // ostream version for testing purposes
 
         // Creates a dot diagram to be used with graphviz for visualizing the graphs
