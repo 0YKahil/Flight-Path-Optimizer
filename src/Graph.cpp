@@ -136,8 +136,113 @@ void Graph::generateAirportGraph(const nlohmann::json& jsonData, const int thres
 
 }
 
+std::pair<std::vector<int>, double> Graph::findShortestPath(const Airport& start, const Airport& destination) { 
+    // Buffer allowance for distance comprimising when there is a route with less landings
+    const int BUFFER = 50;
 
-std::pair<std::vector<int>, double> Graph::findShortestPath(const Airport& start, const Airport& destination) {
+    int total_distance = 0;
+
+    // Check for a direct flight first to avoid unneeded landings
+    int srcIdx = airportToIndex.at(start.id);
+    int destIdx = airportToIndex.at(destination.id);
+    for (const auto& edge : adjList[srcIdx]) {
+        if (edge.dest == destIdx) {
+            total_distance = edge.weight;
+            // Return the list in reverse for the reverse printing function
+            return {{destIdx, srcIdx}, total_distance};
+        }
+    }
+
+    // Creating our minheap priority queue (distance, vertex, hops)
+    using Tuple = std::tuple<int, int, int>;
+    std::priority_queue<Tuple, std::vector<Tuple>, std::greater<Tuple>> pq;
+
+    std::vector<int> dist(numVertices, INT32_MAX); // dist will hold our distances set
+
+    // In this case hops represents the number of landings
+    std::vector<int> hops(numVertices, INT32_MAX); // hops will hold the number of hops to the vertices
+
+    std::vector<bool> visited(numVertices, false); // visited holds visited status of vertices
+
+    std::vector<int> prev(numVertices, -1); // prev holds the previous vertices to reach our current vertex
+
+
+    /**
+     * MODIFIED DIJKSTRA's BEGINS HERE (original Dijkstra's https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm)
+     * 
+     * This modified version will always check for a direct path after every landing to ensure we minimize the number
+     * of landings made while also maintaining the fastest path.
+    */
+
+
+    // Initialize source distance and push to heap
+    pq.push(std::make_tuple(0, srcIdx, 0));
+    dist[srcIdx] = 0;
+    hops[srcIdx] = 0; // Initialize the number of hops to 0 as well
+
+    // Loop until heap is empty and distances are finalized
+    while (!pq.empty()) {
+        // Extract top
+        auto [current_dist, u, current_hops] = pq.top();
+        pq.pop();
+
+        // Ensure we haven't visited current vertex already
+        if (visited[u]) {
+            continue;
+        }
+        visited[u] = true;
+
+        // Check for a direct flight from the current vertex to the destination
+        for (const auto& edge : adjList[u]) {
+            if (edge.dest == destIdx) {
+                total_distance = dist[u] + edge.weight;
+                std::vector<int> path;
+                path.push_back(destIdx);
+                for (int at = u; at != -1; at = prev[at]) {
+                    path.push_back(at);
+                }
+                return {path, total_distance};
+            }
+        }
+
+
+        // If destination is still too far, get all adjacent vertices to current vertex
+        for (const auto& edge : adjList[u]) {
+            int v = edge.dest;
+            int weight = edge.weight;
+
+            // Check for shorter path to v through u and update it if there is
+            // OR 
+            if (dist[v] > dist[u] + weight || (dist[v] <= dist[u] + weight + BUFFER && hops[v] > current_hops + 1)) {
+                dist[v] = dist[u] + weight;
+                hops[v] = current_hops + 1;
+                pq.push(std::make_tuple(dist[v], v, hops[v]));
+                prev[v] = u;
+            }
+        }
+    }
+ 
+    // If heap was finished, check if there was a path to destination
+    if (dist[destIdx] == INT32_MAX) {
+        return {}; // return empty vector if there was no path
+    }
+
+    total_distance = dist[destIdx];
+
+    // Construct the path from start to destination
+    std::vector<int> path;
+
+    // iterate through prevs until beginning of path is reached
+    for (int at = destIdx; at != -1; at = prev[at]) {
+        path.push_back(at);
+    }
+
+
+    return {path, total_distance};
+}
+
+
+std::pair<std::vector<int>, double> Graph::findShortestPathMIN(const Airport& start, const Airport& destination) {
     int total_distance = 0;
 
     // Check for a direct flight first to avoid unneeded landings
@@ -156,13 +261,17 @@ std::pair<std::vector<int>, double> Graph::findShortestPath(const Airport& start
 
     std::vector<int> dist(numVertices, INT32_MAX); // dist will hold our distances set
     
-    // array holding visited status of vertices
-    std::vector<bool> visited(numVertices, false);
+    std::vector<bool> visited(numVertices, false); // visited holds visited status of vertices
 
-    // Hold previous vertices to current vertex
-    std::vector<int> prev(numVertices, -1);
+    std::vector<int> prev(numVertices, -1); // prev holds the previous vertices to reach our current vertex
 
-    // Dijkstra's Algorithm begins here (https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm)
+    /**
+     * Modified Dijkstra's Algorithm begins here (https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm)
+     * 
+     * This modified version will always check for a direct path after every landing to ensure we minimize the number
+     * of landings made while also maintaining the fastest path.
+    */
+
 
     // Initialize source distance and push to heap
     pq.push(std::make_pair(0, srcIdx));

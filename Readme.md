@@ -1,8 +1,8 @@
 # Flight Path Optimizer
 
-Flight Path Optimizer calculates the shortest route for a limited plane's range using Dijkstra's algorithm. The program fetches airport data from OurAirports API, calculates the great circle distances (orthodromic distance) between all pairs of airports that fit the given needs, and creates a graph with airports as nodes and requirement matching distances as edges, then outputs the shortest path to the destination of choice.
+Flight Path Optimizer calculates the shortest route for a limited plane's range using a highly modified version of Dijkstra's algorithm. The program fetches airport data from OurAirports API, calculates the great circle distances (orthodromic distance) between all pairs of airports that fit the given needs, and generates a graph with airports as nodes and requirement matching distances as edges, then outputs the shortest path to the destination of choice.
 
-This Project was made **with the advising of a Licensed Pilot** and the routes are tested and ensured to be the most optimal routes without unnecessary stops or landings that waste time
+This Project was made **with the advising of a Licensed Pilot** and the routes are tested to be the most optimal routes without unnecessary stops. It will take into account comprimising slightly extra distance, for a few less landings for pilot convenience.
 
 
 This project uses a modifiable **Threshold** ([see here](#Threshold)) when creating paths representing **the realistic range of the aircraft** to remove any unreachable paths.
@@ -16,12 +16,12 @@ For example, while the max range is 650nm, a realistic range for the Cesna 172 i
 ## Features
 
 - Fetches Airport location data from OurAirports api
-- parses and filters data using a python script to only include
+- Parses and filters data using a python script to only include
 small, medium, and large airports (no heliports or seaports) and restrict to region of choice
 - Calculates the circle distance between all the pairs of airports
 using the Haversine formula https://en.wikipedia.org/wiki/Haversine_formula
-- Converts calculations into an adjacency list representing a graph with airports as nodes and **Reachable** distances as the edges
-- Using Dijkstra's Algorithm (https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm), finds the shortest path from a given starting airport and destination and outputs it to the user
+- Converts calculations into an adjacency list representation of a graph with airports as nodes and **Reachable** distances as the edges
+- Using a personally written and modified version of Dijkstra's Algorithm (see summary above for details), finds the optimal path from a given starting airport and destination and outputs it to the user.
 
 # Threshold
 ### The Threshold sets the maximum distance (in nautical miles) for creating edges between airports in the network graph. This ensures only direct, feasible routes are included.
@@ -77,4 +77,19 @@ It is **not recommended** to use this version if you do not know what you are do
 - Initial Working Program
 
 ### v1.0.1 - 12 June 2024
-- **Important Change**: Updated the algorithm to check for a direct flight from the current airport after every landing
+- **Important Algorithm Change**: Updated the algorithm to check for a direct flight from the current airport after every landing
+
+### v1.0.2 - 12 June 2024
+- **Important Algorithm Change**: Updated the algorithm again, and separated it into 2 versions. 
+
+    - Version **findShortestPathMIN()**: Acts the same as in 1.0.1 and attempts to minimize distance while checking for a direct flight after every landing (hop).
+
+    - Version **findShortestPath()**: This version will **sacrifice some distance for the convenience of not having to land as many times**. This version will be the default version used in the program.
+    
+    ### Here is an example of this (Ottawa to Mexico City)
+    #### OLD (MIN version):
+    ![alt text](/img/ott_mex_oldalg.png)
+    Here the total distance is slightly lower, however most people would not want to land this many times to save ~10nm of flying (in the end the landings will waste much more time).
+    #### NEW (Default version):
+    ![alt text](/img/ott_mex_newalg.png)
+    As you can see the total distance is slighly higher, however in the end it is a more efficient path that considers the fact that more stops will waste more fuel anyways.

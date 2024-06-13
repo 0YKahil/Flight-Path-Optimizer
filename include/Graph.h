@@ -77,15 +77,17 @@ class Graph {
         void generateAirportGraph(const nlohmann::json& jsonData, const int threshold, bool useMultithreading);
 
         /**
-         * Finds the shortest path from start airport to destination airport using Dijkstra's algorithm
-         * and prints out the path in order if it is reachable.
-         * If NOT reachable, prints (cannot reach)
+         * Finds the shortest path from start airport to destination airport using a highly modified version of Dijkstra's algorithm
+         * and returns a pair with the list containing the path in reverse order, as well as the total distance of the path
          * 
+         * THIS VERSION WILL RECCOMMEND SLIGHTLY LONGER ROUTES WITH LESS LANDINGS IF THEY EXIST
          * @param start The starting Airport
          * @param destination The destination Airport
          */
         std::pair <std::vector<int>, double> findShortestPath(const Airport& start, const Airport& destination);
 
+        // THIS VERSION DOES THE SAME AS ABOVE, BUT WILL ALWAYS RECOMMEND THE SHORTEST ROUTE WITH A VERY LOW AMOUNT OF LANDINGS
+        std::pair <std::vector<int>, double> findShortestPathMIN(const Airport& start, const Airport& destination);
         /**
          * Converts startID and destID to their corresponding airports, and 
          * Maps the elements of the resulting array of findShortestPath() on the given ids
