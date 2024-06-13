@@ -2,7 +2,7 @@
 
 Flight Path Optimizer calculates the shortest route for a limited plane's range using a highly modified version of Dijkstra's algorithm. The program fetches airport data from OurAirports API, calculates the great circle distances (orthodromic distance) between all pairs of airports that fit the given needs, and generates a graph with airports as nodes and requirement matching distances as edges, then outputs the shortest path to the destination of choice.
 
-This Project was made **with the advising of a Licensed Pilot** and the routes are tested to be the most optimal routes without unnecessary stops. It will take into account comprimising slightly extra distance, for a few less landings for pilot convenience.
+This Project was made **with the advising of a Licensed Pilot** and the routes are tested to be the most optimal routes without unnecessary stops. It will take into account compromising slightly extra distance, for a few less landings for pilot convenience.
 
 
 This project uses a modifiable **Threshold** ([see here](#Threshold)) when creating paths representing **the realistic range of the aircraft** to remove any unreachable paths.
