@@ -1,6 +1,6 @@
 # Please refer to main branch README for information on the console RELEASE version
 
-##This version is a converted version of the main project from a Linux Based GNU and CMake Environment to a MSVC visual studio environment
+## This version is a converted version of the main project from a Linux Based GNU and CMake Environment to a MSVC visual studio environment
 **The Biggest none source file change is the main function will become a simple console ui style application instead of the old terminal typing based version**
 #### Summary of changes in src and scripts:
 - Some return types of functions (specifically the findShortestPath() functions) were modified from pair<vector, double> to pair<vector, int> so the compiler doesn't freak out when dealing with the cases where the code converts a double to an int without casting (I chose to go for int as I wanted the total distance rounded)
