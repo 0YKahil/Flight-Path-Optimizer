@@ -37,16 +37,22 @@ int main() {
     file >> jsonData; // read the airports file into json object
     std::cout << "done\n" << std::endl;
 
-    // Prompt for aircraft range
+    // // Prompt for aircraft range
     THRESHOLD = promptRange();
 
     /**
-     * WRITE TO INI STARTS HERE
+     * WRITE TO CONFIG STARTS HERE
      */
+    Config config("Settings", "config.json");
 
+    // writing
+    config.write("user.range", "412");
+    THRESHOLD = toInteger(config.read("user.range", "0"));
+
+    std::cout << ++THRESHOLD << std::endl; 
 
     /**
-     * **WRITE TO INI ENDS**
+     * **WRITE TO CONFIG ENDS**
      */
 
 

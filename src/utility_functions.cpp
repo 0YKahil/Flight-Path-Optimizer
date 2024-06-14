@@ -5,17 +5,46 @@
  * Implementation of the utility functions
  */
 #include "utility_functions.h"
+#include <filesystem>
 
-Config::Config(const std::string& path) {
-    // Stub
+namespace fs = std::filesystem;
+
+Config::Config(const std::string& directory, const std::string& filename)
+{
+  // Ensure the directory exists
+    if (!fs::exists(directory))
+    {
+        if (!fs::create_directories(directory))
+        {
+            std::cerr << "Failed to create directory: " << directory << std::endl;
+            return;
+        }
+    }
+
+    // Set the file path
+    filepath = directory + "/" + filename;
+
+    // Load existing JSON data if the file exists
+    std::ifstream file(filepath);
+    if (file.is_open())
+    {
+        file >> jsonData;
+        file.close();
+    }
+
 }
 
 std::string Config::read(const std::string& key, const std::string& defaultValue) {
-    // stub
+    return jsonData.value(key, defaultValue);
 }
 
 void Config::write(const std::string& key, const std::string& value) {
-    // stub
+    jsonData[key] = value;
+    std::ofstream file(filepath);
+    if (file.is_open()) {
+        file << jsonData.dump(4);
+        file.close();
+    }
 }
 
 bool isInteger(const std::string& string) {

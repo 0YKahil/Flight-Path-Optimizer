@@ -18,3 +18,4 @@ build
 flightPathOptimizer
 dot_files/airports.dot
 testing.cpp
+config.json

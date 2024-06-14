@@ -19,9 +19,10 @@ class Config {
     public:
         /**
          * Constructor for a Config with data to be persisted.
-         * @param path The path to the config file.
+         * @param directory The directory of the config file.
+         * @param filename The name of the config file
          */
-        Config(const std::string& path);
+        Config(const std::string& directory, const std::string& filename);
 
         /**
          * Reads an item in the JSON config file using the provided and returns the value associated with it.
@@ -41,8 +42,8 @@ class Config {
         void write(const std::string& key, const std::string& value);
 
     private:
-        std::string filepath; // file path to config file
-        nlohmann::json jsonData; // the associated json data
+        std::string filepath; // File path to config file
+        nlohmann::json jsonData; // The json Data provided to the object from the given file
 
 };
 
