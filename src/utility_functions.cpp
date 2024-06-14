@@ -152,7 +152,7 @@ int promptRange() {
     while (std::cin.fail()) {
         std::cin.clear();
         std::cin.ignore((std::numeric_limits<std::streamsize>::max)(), '\n'); // skip invalid input
-        system("cls");
+        // system("cls");
         std::cout << "\033[31m" << "Not a valid input. Please enter a Number: \n> " << "\033[0m";
         std::cin >> input;
     }
