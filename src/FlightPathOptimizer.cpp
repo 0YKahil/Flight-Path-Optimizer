@@ -20,7 +20,7 @@
  * NOTE: This will typically be what you will change depending on the aircraft's
  *       MAX range after calculating for fuel burning, wind, etc.
  */
-const int THRESHOLD = 450;
+int THRESHOLD = 0;
 
 
 int main() {
@@ -35,7 +35,10 @@ int main() {
     std::ifstream file(filepath);
     nlohmann::json jsonData;
     file >> jsonData; // read the airports file into json object
-    std::cout << "done" << std::endl;
+    std::cout << "done\n" << std::endl;
+
+    // Prompt for aircraft range
+    THRESHOLD = promptRange();
 
     // Creating AirportGraph
 
@@ -57,14 +60,16 @@ int main() {
     // for (auto ap : airports) {
     //     std::cout << ap.id << ", ";
     // }
+
+
     // Allow user to input through the console
-    
 
     // User input for starting and destination airport ids
     std::string lstartID, ldestID;
 
     // MAIN LOOP
     while (true) {
+
         std::cout << YELLOW << "\n\nEnter the FULL identifier code for the STARTING airport (e.g. CYOW not YOW) (or 'exit' to quit): \n> " << RESET;
         std::cin >> lstartID;
 

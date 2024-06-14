@@ -5,9 +5,6 @@
  * Implementation of the utility functions
  */
 #include "utility_functions.h"
-#include <iostream>
-#include <cstdlib>
-#include <fstream>
 
 bool fileExists(const std::string& filename) {
     std::ifstream file(filename);
@@ -79,4 +76,22 @@ std::string toUpperCase(std::string str) {
     std::string out;
     for (auto& c : str) out += toupper(c);
     return out;
+}
+
+int promptRange() {
+    int input;
+
+    std::cout << "Please enter the range of your aircraft (in nautical miles): \n> ";
+    std::cin >> input;
+
+    // Ensure input is an integer
+    while (std::cin.fail()) {
+        std::cin.clear();
+        std::cin.ignore((std::numeric_limits<std::streamsize>::max)(), '\n'); // skip invalid input
+        system("cls");
+        std::cout << "\033[31m" << "Not a valid input. Please enter a Number: \n> " << "\033[0m";
+        std::cin >> input;
+    }
+
+    return input;
 }
