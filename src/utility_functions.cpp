@@ -134,6 +134,17 @@ std::string toUpperCase(std::string str) {
 int promptRange() {
     int input;
 
+    Config config("Settings", "config.json");
+
+    // Checking if user range already exists from before and returning it if it does
+    input = toInteger(config.read("user.range", "0"));
+    if (input > 0) {
+        std::cout << "Using saved range = " << input;
+        return input;
+    }
+
+    config.write("user.range", "412");
+
     std::cout << "Please enter the range of your aircraft (in nautical miles): \n> ";
     std::cin >> input;
 
