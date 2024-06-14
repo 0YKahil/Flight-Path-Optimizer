@@ -6,6 +6,30 @@
  */
 #include "utility_functions.h"
 
+Config::Config(const std::string& path) {
+    // Stub
+}
+
+std::string Config::read(const std::string& key, const std::string& defaultValue) {
+    // stub
+}
+
+void Config::write(const std::string& key, const std::string& value) {
+    // stub
+}
+
+bool isInteger(const std::string& string) {
+    return !string.empty() && std::all_of(string.begin(), string.end(), ::isdigit);
+}
+
+int toInteger(const std::string& string) {
+    int out = -1;
+    if (isInteger(string)) {
+        out = std::stoi(string);
+    }
+    return out;
+}
+
 bool fileExists(const std::string& filename) {
     std::ifstream file(filename);
     return file.good();

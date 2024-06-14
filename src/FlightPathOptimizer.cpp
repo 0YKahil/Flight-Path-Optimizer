@@ -40,6 +40,17 @@ int main() {
     // Prompt for aircraft range
     THRESHOLD = promptRange();
 
+    /**
+     * WRITE TO INI STARTS HERE
+     */
+
+
+    /**
+     * **WRITE TO INI ENDS**
+     */
+
+
+
     // Creating AirportGraph
 
     std::cout << "generating airport graph... ";

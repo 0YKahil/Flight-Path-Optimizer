@@ -11,7 +11,50 @@
 #include <cstdlib>
 #include <fstream>
 #include <limits>
+#include <vector>
+#include "../external/json.hpp"
 
+// Config is a simple class to create and parse config files for persistence of configuration
+class Config {
+    public:
+        /**
+         * Constructor for a Config with data to be persisted.
+         * @param path The path to the config file.
+         */
+        Config(const std::string& path);
+
+        /**
+         * Reads an item in the JSON config file using the provided and returns the value associated with it.
+         * If there is no value for a given key, returns the defaultValue provided.
+         * 
+         * @param key The key of the item of interest (e.g. 'userRange').
+         * @param defaultValue The default value that is returned if the key is not found.
+         */
+        std::string read(const std::string& key, const std::string& defaultValue = "");
+
+        /**
+         * Writes an item to the JSON config file with a provided key and associated value.
+         * 
+         * @param key The key of the item being written (e.g. "userRange").
+         * @param value The associated value written to the provided key (e.g. "550").
+         */
+        void write(const std::string& key, const std::string& value);
+
+    private:
+        std::string filepath; // file path to config file
+        nlohmann::json jsonData; // the associated json data
+
+};
+
+// returns true if the form of string is an integer (e.g. "500"); false otherwise
+bool isInteger(const std::string& string);
+
+/**
+ * Returns the given string as an integer; or -1 if string is not an integer
+ * 
+ * REQUIRES: string has to represent an integer
+ */
+int toInteger(const std::string& string);
 
 // Returns true if a file already exists in the director; false otherwise.
 bool fileExists(const std::string& filename);
@@ -47,3 +90,19 @@ std::string toUpperCase(std::string str);
  * and returns it if it is valid
  */
 int promptRange();
+
+/**
+ * Saves a specific item to the file path ini file with the given key and value
+ * e.g. userRange = 50
+ * 
+ * @param filepath file path to the ini file.
+ * @param key The key associated with the item being saved (e.g. "userRange")
+ * @param value The value being saved to that specific key
+ */
+template <typename T>
+void writeToIni(const std::string& filepath, const std::string& key, const T value);
+
+/**
+ * Loads the data from the ini 
+ */
+void loadIni(const std::string& filepath, std::vector<int> items);

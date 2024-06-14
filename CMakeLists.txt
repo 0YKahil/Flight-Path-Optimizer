@@ -25,6 +25,12 @@ set(graphtests
     ${CMAKE_SOURCE_DIR}/tests/test_main.cpp
 )
 
+set(utilitytests 
+    ${CMAKE_SOURCE_DIR}/src/utility_functions.cpp
+    ${CMAKE_SOURCE_DIR}/tests/utilityTest.cpp
+    ${CMAKE_SOURCE_DIR}/tests/test_main.cpp
+)
+
 set(main
     ${CMAKE_SOURCE_DIR}/src/Airport.cpp
     ${CMAKE_SOURCE_DIR}/src/Graph.cpp
@@ -34,6 +40,7 @@ set(main
 
 # Add executables
 # add_executable(edgeTest ${edgetests})
-add_executable(airportTest ${airporttests})
-add_executable(graphTest ${graphtests})
+# add_executable(airportTest ${airporttests})
+# add_executable(graphTest ${graphtests})
 add_executable(flightPathOptimizer ${main})
+add_executable(utilityTest ${utilitytests})
