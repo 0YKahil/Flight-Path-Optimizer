@@ -6,7 +6,6 @@
  */
 #include "utility_functions.h"
 #include <filesystem>
-
 namespace fs = std::filesystem;
 
 Config::Config(const std::string& directory, const std::string& filename)
@@ -31,10 +30,19 @@ Config::Config(const std::string& directory, const std::string& filename)
         file >> jsonData;
         file.close();
     }
+    else
+    {
+        // Initialize jsonData to an empty object if file its not open or empty
+        jsonData = nlohmann::json::object();
+    }
 
 }
 
 std::string Config::read(const std::string& key, const std::string& defaultValue) {
+    if (jsonData.is_null())
+    {
+        return defaultValue;
+    }
     return jsonData.value(key, defaultValue);
 }
 
@@ -108,7 +116,6 @@ void askRunScript(const std::string& scriptPath, const std::string& jsonFilePath
     
 }
 
-
 bool prompt(const std::string& question) {
     char userInput;
     while(true) {
@@ -132,24 +139,28 @@ std::string toUpperCase(std::string str) {
 }
 
 int promptRange() {
-    int input;
+    std::string input; // Will hold the string input OR the value from read()
+    int out = 0; // Will carry the integer value of input and be returned
 
+    // Open the config file if it exists or create it if it doesn't
     Config config("Settings", "config.json");
-
-    // Checking if user range already exists from before and returning it if it does
-    input = toInteger(config.read("user.range", "0"));
-    if (input > 0) {
-        std::cout << "Using saved range = " << input;
-        return input;
+    // Checking if user.range already exists from before and returning it if it does
+    out = toInteger(config.read("user.range", "0"));
+    
+    if (out > 0) {
+        std::cout << "Using saved range: " << out << "nm" << std::endl;
+        return out;
     }
 
-    config.write("user.range", "412");
-
+    // Allow user to input their range.
+    std::cout << "It seems this is your first time running the program" << std::endl;
     std::cout << "Please enter the range of your aircraft (in nautical miles): \n> ";
     std::cin >> input;
 
+    config.write("user.range", input);
+
     // Ensure input is an integer
-    while (std::cin.fail()) {
+    while (!isInteger(input)) {
         std::cin.clear();
         std::cin.ignore((std::numeric_limits<std::streamsize>::max)(), '\n'); // skip invalid input
         // system("cls");
@@ -157,5 +168,6 @@ int promptRange() {
         std::cin >> input;
     }
 
-    return input;
+    std::cout << "\nRange saved to config.json." << std::endl;
+    return toInteger(input);
 }

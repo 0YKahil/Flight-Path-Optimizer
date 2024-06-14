@@ -40,23 +40,6 @@ int main() {
     // // Prompt for aircraft range
     THRESHOLD = promptRange();
 
-    /**
-     * WRITE TO CONFIG STARTS HERE
-     */
-    Config config("Settings", "config.json");
-
-    // writing
-    config.write("user.range", "412");
-    THRESHOLD = toInteger(config.read("user.range", "0"));
-
-    std::cout << ++THRESHOLD << std::endl; 
-
-    /**
-     * **WRITE TO CONFIG ENDS**
-     */
-
-
-
     // Creating AirportGraph
 
     std::cout << "generating airport graph... ";

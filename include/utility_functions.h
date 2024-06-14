@@ -11,7 +11,6 @@
 #include <cstdlib>
 #include <fstream>
 #include <limits>
-#include <vector>
 #include "../external/json.hpp"
 
 // Config is a simple class to create and parse config files for persistence of configuration
@@ -87,7 +86,7 @@ std::string toUpperCase(std::string str);
 
 
 /**
- * Prompts for user entered aircraft range
+ * Checks config.json for user.range and returns its value. If it does not exist, prompts for user entered aircraft range
  * and returns it if it is valid
  */
 int promptRange();

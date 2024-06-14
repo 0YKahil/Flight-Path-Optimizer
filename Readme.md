@@ -97,3 +97,7 @@ It is **not recommended** to use this version if you do not know what you are do
     #### NEW (Default version):
     ![alt text](/img/ott_mex_newalg.png)
     As you can see the total distance is slighly higher, however in the end it is a more efficient path that considers the fact that more stops will waste more fuel anyways.
+
+### v1.0.3 - 14 June 2024 (Console-UI & Source version)
+- **Both Versions**: Implemented config class and functions to create file in Settings/config.json to save inputted range to persist between program use.
+- **Console UI version**: Implemented the configuration option in the console ui, which can be used to configure the saved range in the config file.
