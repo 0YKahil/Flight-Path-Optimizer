@@ -13,6 +13,52 @@
 #include <chrono>
 #include <windows.h>
 #include <conio.h>
+#include "../include/json.hpp"
+
+ // Config is a simple class to create and parse config files for persistence of configuration
+class Config {
+public:
+    /**
+     * Constructor for a Config with data to be persisted.
+     * @param directory The directory of the config file.
+     * @param filename The name of the config file
+     */
+    Config(const std::string& directory, const std::string& filename);
+
+    /**
+     * Reads an item in the JSON config file using the provided and returns the value associated with it.
+     * If there is no value for a given key, returns the defaultValue provided.
+     *
+     * @param key The key of the item of interest (e.g. 'userRange').
+     * @param defaultValue The default value that is returned if the key is not found.
+     */
+    std::string read(const std::string& key, const std::string& defaultValue = "");
+
+    /**
+     * Writes an item to the JSON config file with a provided key and associated value.
+     *
+     * @param key The key of the item being written (e.g. "userRange").
+     * @param value The associated value written to the provided key (e.g. "550").
+     */
+    void write(const std::string& key, const std::string& value);
+
+private:
+    std::string filepath; // File path to config file
+    nlohmann::json jsonData; // The json Data provided to the object from the given file
+
+};
+
+
+// returns true if the form of string is an integer (e.g. "500"); false otherwise
+bool isInteger(const std::string& string);
+
+/**
+ * Returns the given string as an integer; or -1 if string is not an integer
+ *
+ * REQUIRES: string has to represent an integer
+ */
+int toInteger(const std::string& string);
+
 
 
 // Returns true if a file already exists in the director; false otherwise.
@@ -54,7 +100,7 @@ bool prompt(const std::string& question);
 std::string toUpperCase(std::string str);
 
 /**
- * Prompts for user entered aircraft range
+ * Checks config.json for user.range and returns its value. If it does not exist, prompts for user entered aircraft range
  * and returns it if it is valid
  */
 int promptRange();

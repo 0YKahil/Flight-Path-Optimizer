@@ -6,6 +6,68 @@
  */
 #include "../include/utility_functions.h"
 
+namespace fs = std::filesystem;
+
+Config::Config(const std::string& directory, const std::string& filename)
+{
+    // Ensure the directory exists
+    if (!fs::exists(directory))
+    {
+        if (!fs::create_directories(directory))
+        {
+            std::cerr << "Failed to create directory: " << directory << std::endl;
+            return;
+        }
+    }
+
+    // Set the file path
+    filepath = directory + "/" + filename;
+
+    // Load existing JSON data if the file exists
+    std::ifstream file(filepath);
+    if (file.is_open())
+    {
+        file >> jsonData;
+        file.close();
+    }
+    else
+    {
+        // Initialize jsonData to an empty object if file its not open or empty
+        jsonData = nlohmann::json::object();
+    }
+
+}
+
+
+std::string Config::read(const std::string& key, const std::string& defaultValue) {
+    if (jsonData.is_null())
+    {
+        return defaultValue;
+    }
+    return jsonData.value(key, defaultValue);
+}
+
+void Config::write(const std::string& key, const std::string& value) {
+    jsonData[key] = value;
+    std::ofstream file(filepath);
+    if (file.is_open()) {
+        file << jsonData.dump(4);
+        file.close();
+    }
+}
+
+bool isInteger(const std::string& string) {
+    return !string.empty() && std::all_of(string.begin(), string.end(), ::isdigit);
+}
+
+int toInteger(const std::string& string) {
+    int out = -1;
+    if (isInteger(string)) {
+        out = std::stoi(string);
+    }
+    return out;
+}
+
 
 bool fileExists(const std::string& filename) {
     std::ifstream file(filename);
@@ -106,14 +168,30 @@ std::string toUpperCase(std::string str) {
     return out;
 }
 
-int promptRange() {
-    int input;
 
+int promptRange() {
+    std::string input; // Will hold the string input OR the value from read()
+    int out = 0; // Will carry the integer value of input and be returned
+
+    // Open the config file if it exists or create it if it doesn't
+    Config config("Settings", "config.json");
+    // Checking if user.range already exists from before and returning it if it does
+    out = toInteger(config.read("user.range", "0"));
+
+    if (out > 0) {
+        std::cout << "Using saved range: " << out << "nm" << std::endl;
+        return out;
+    }
+
+    // Allow user to input their range.
+    std::cout << "It seems this is your first time running the program" << std::endl;
     std::cout << "Please enter the range of your aircraft (in nautical miles): \n> ";
     std::cin >> input;
 
+    config.write("user.range", input);
+
     // Ensure input is an integer
-    while (std::cin.fail()) {
+    while (!isInteger(input)) {
         std::cin.clear();
         std::cin.ignore((std::numeric_limits<std::streamsize>::max)(), '\n'); // skip invalid input
         system("cls");
@@ -121,6 +199,8 @@ int promptRange() {
         std::cin >> input;
     }
 
-    return input;
+    std::cout << "\nRange saved to config.json." << std::endl;
+    system("cls");
+    return toInteger(input);
 }
 
