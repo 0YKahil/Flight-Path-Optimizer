@@ -26,11 +26,30 @@ int THRESHOLD = 0;
  */
 int MODE = 0;
 
+// Config will contain all the persisting settings set by the user
+Config config("Settings", "config.json"); // Initialize config.json or Open it
+
 std::string dataFilepath = "./datasets/airports.json";
 std::string fetchScriptpath = "./scripts/fetchAirportData.py";
 
+// Initializes config values
+void initConfig() {
+    if (config.read("path.mode", "-1") == "-1") {
+        config.write("path.mode", "0");
+    }
+    else {
+        MODE = std::stoi(config.read("path.mode", "-1"));
+    }
 
-// Moves the cursor to the specified (x, y) position on the console
+    if (config.read("user.range", "-1") == "-1") {
+        config.write("user.range", "0");
+    }
+    else {
+        THRESHOLD = std::stoi(config.read("user.range", "0"));
+    }
+}
+
+// Moves the cursor to the specified position on the console
 void gotoXY(int x, int y) {
     COORD coord = { (SHORT)(x), (SHORT)(y) };
     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord); // Set the cursor position to coord
@@ -58,6 +77,7 @@ void printMenu(const std::vector<std::string>& menuItems, int currentSelection) 
     }
 }
 
+// Executes the find path action and Prompts the user for starting and destination codes then outputs the best path
 void findPathAction(int mode) {
     // Read the json file into jsonData
     std::cout << "reading file... ";
@@ -140,12 +160,84 @@ void configureRangeAction() {
 
     THRESHOLD = newRange;
 
-    Config config("Settings", "config.json"); // Open config file
-
     config.write("user.range", std::to_string(newRange)); // Write th updated range to the config file
 
     system("cls");
     std::cout << YELLOW << BOLD << "\n User Range successfully updated to " << THRESHOLD << "nm" << RESET << std::endl;
+}
+
+int configureModeAction(int selection) {
+    system("cls"); // Clear the console screen
+
+    switch (selection) {
+    case 1: // Mode 0
+        if (MODE == 0) {
+            std::cout << BOLD << YELLOW << "\n Already Using Mode 1. " << RESET << std::endl;
+            break;
+        }
+        MODE = 0;
+        config.write("path.mode", "0");
+        std::cout << BOLD << YELLOW << "\n Switched to Mode 1" << RESET << std::endl;
+        break;
+    case 2: // Mode 1
+        if (MODE == 1) {
+            std::cout << BOLD << YELLOW << "\n Already Using Mode 2. " << RESET << std::endl;
+            break;
+        }
+        MODE = 1;
+        config.write("path.mode", "1");
+        std::cout << BOLD << YELLOW << "\n Switched to Mode 2." << RESET << std::endl;
+        break;
+    case 3: // Return to configuration menu
+        return 0;
+    default:
+        break;
+    }
+    std::cout << "\n Press any key to return to Configuration Menu...";  // Prompt user to press any key to return to the menu
+    _getch(); // Wait for a key press
+    return 1;
+}
+
+// Display the select mode menu to allow cycling between the two modes in Graph::printShortestPath();
+void modeMenu() {
+    std::vector<std::string> modeItems = {
+        " Select An Output Path Mode",
+        " > Mode 1: Output ICAO Codes (AAAA -> AAAB -> AAAC) <",
+        " > Mode 2: Output Airport Names (A International Airport -> B International Airport -> C International Airport) <",
+        " > Return To Configuration Menu <"
+    };
+
+    int currentSelection = 1;
+
+    while (true) {
+        printMenu(modeItems, currentSelection);
+        int ch = _getch();  // Get key press
+
+        // If key is special arrow key
+        if (ch == 224) {
+            switch (_getch()) {
+            case 72: // Up arrow pressed
+                // Don't select the title
+                if (currentSelection > 1 && currentSelection != 0) {
+                    --currentSelection;  // Move up the list
+                }
+                break;
+            case 80: // Down arrow pressed
+                // If not already at the bottom
+                if (currentSelection < modeItems.size() - 1) {
+                    ++currentSelection; // Move down
+                }
+                break;
+            default:
+                break;
+            }
+        }
+        else if (ch == 13) { // Enter pressed
+            if(configureModeAction(currentSelection)) return; // skip confirmation
+            break;
+        }
+    }
+
 }
 
 // Performs the selected configuration action and returns 0; or returns 1 if exiting to main menu
@@ -156,10 +248,10 @@ int configureAction(int selection) {
         configureRangeAction();
         break;
     case 2:
-        std::cout << "Configuring Path Output Mode ..." << std::endl;  // Placeholder to search for an airport by its code or name
-        break;
+        modeMenu();
+        return 0;
     case 3:
-        std::cout << "Returning to menu ..." << std::endl;  // Placeholder to re fetch the airport data from the API
+        std::cout << "Returning to menu ..." << std::endl;
         return 1;
     default:
         break;
@@ -169,24 +261,7 @@ int configureAction(int selection) {
     return 0;
 }
 
-// Display the select mode menu to allow cycling between the two modes in Graph::printShortestPath();
-void modeMenu() {
-    std::vector<std::string> modeItems = {
-        " Select An Output Path Mode",
-        " > Output ICAO Codes (AAAA -> AAAB -> AAAC) <",
-        " > Output Airport Names (A International Airport -> B International Airport -> C International Airport) <",
-        " > Return To Configuration Menu <"
-    };
-
-    int currentSelection = 1;
-
-    while (true) {
-        printMenu(modeItems, currentSelection);
-        int ch = _getch();
-    }
-
-}
-
+// Opens the configuration Menu and corresponding actions
 void configureMenu() {
     std::vector<std::string> configureItems = {
         " Configuration Menu",
@@ -260,9 +335,15 @@ void menuAction(int selection) {
 
 
 int main() {
-    runScript(dataFilepath);
+    // Initialize our config file if it doesn't exist or load its information if it does
+    initConfig();
 
-    THRESHOLD = promptRange(); // Ask for aircraft Range
+    runScript(dataFilepath);
+    THRESHOLD = promptRange(config); // Ask for aircraft Range
+
+    config.write("user.range", std::to_string(THRESHOLD));
+    std::cout << "\nRange saved to config.json." << std::endl;
+
 
     std::vector<std::string> menuItems = {
         " Flight Path Optimizer (use arrow keys for selection) ",

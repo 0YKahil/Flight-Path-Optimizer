@@ -11,10 +11,8 @@ namespace fs = std::filesystem;
 Config::Config(const std::string& directory, const std::string& filename)
 {
     // Ensure the directory exists
-    if (!fs::exists(directory))
-    {
-        if (!fs::create_directories(directory))
-        {
+    if (!fs::exists(directory)) {
+        if (!fs::create_directories(directory)) {
             std::cerr << "Failed to create directory: " << directory << std::endl;
             return;
         }
@@ -25,23 +23,19 @@ Config::Config(const std::string& directory, const std::string& filename)
 
     // Load existing JSON data if the file exists
     std::ifstream file(filepath);
-    if (file.is_open())
-    {
+    if (file.is_open() && file.peek() != std::ifstream::traits_type::eof()) {
         file >> jsonData;
         file.close();
     }
-    else
-    {
-        // Initialize jsonData to an empty object if file its not open or empty
+    else {
+        // Initialize jsonData to an empty object if file is not open or empty
         jsonData = nlohmann::json::object();
     }
-
 }
 
 
 std::string Config::read(const std::string& key, const std::string& defaultValue) {
-    if (jsonData.is_null())
-    {
+    if (jsonData.is_null()) {
         return defaultValue;
     }
     return jsonData.value(key, defaultValue);
@@ -169,14 +163,13 @@ std::string toUpperCase(std::string str) {
 }
 
 
-int promptRange() {
+int promptRange(Config config) {
     std::string input; // Will hold the string input OR the value from read()
     int out = 0; // Will carry the integer value of input and be returned
 
     // Open the config file if it exists or create it if it doesn't
-    Config config("Settings", "config.json");
     // Checking if user.range already exists from before and returning it if it does
-    out = toInteger(config.read("user.range", "0"));
+    out = toInteger(config.read("user.range", "-1"));
 
     if (out > 0) {
         std::cout << "\nUsing saved range: " << out << "nm" << std::endl;
@@ -197,9 +190,6 @@ int promptRange() {
         std::cin >> input;
     }
 
-    config.write("user.range", input);
-
-    std::cout << "\nRange saved to config.json." << std::endl;
     system("cls");
     return toInteger(input);
 }

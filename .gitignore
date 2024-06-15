@@ -1,6 +1,7 @@
 fetch_airport_data.exe
 fetch_airport_data.bat
 FlightPa.128172af/
+config.json
 
 # User-specific files
 *.rsuser

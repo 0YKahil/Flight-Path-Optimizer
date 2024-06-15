@@ -102,5 +102,7 @@ std::string toUpperCase(std::string str);
 /**
  * Checks config.json for user.range and returns its value. If it does not exist, prompts for user entered aircraft range
  * and returns it if it is valid
+ * 
+ * @param config Config file that is being written to and from
  */
-int promptRange();
+int promptRange(Config config);

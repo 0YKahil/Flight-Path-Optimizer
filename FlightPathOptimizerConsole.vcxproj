@@ -41,7 +41,6 @@
     <None Include=".gitignore" />
     <None Include="datasets\airports.json" />
     <None Include="scripts\fetchAirportData.py" />
-    <None Include="Settings\config.json" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
