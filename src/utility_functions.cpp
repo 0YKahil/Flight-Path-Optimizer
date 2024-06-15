@@ -179,16 +179,14 @@ int promptRange() {
     out = toInteger(config.read("user.range", "0"));
 
     if (out > 0) {
-        std::cout << "Using saved range: " << out << "nm" << std::endl;
+        std::cout << "\nUsing saved range: " << out << "nm" << std::endl;
         return out;
     }
 
     // Allow user to input their range.
-    std::cout << "It seems this is your first time running the program" << std::endl;
-    std::cout << "Please enter the range of your aircraft (in nautical miles): \n> ";
+    std::cout << "\nIt seems this is your first time running the program" << std::endl;
+    std::cout << "\n\nPlease enter the range of your aircraft (in nautical miles): \n> ";
     std::cin >> input;
-
-    config.write("user.range", input);
 
     // Ensure input is an integer
     while (!isInteger(input)) {
@@ -198,6 +196,8 @@ int promptRange() {
         std::cout << "\033[31m" << "Not a valid input. Please enter a Number: \n> " << "\033[0m";
         std::cin >> input;
     }
+
+    config.write("user.range", input);
 
     std::cout << "\nRange saved to config.json." << std::endl;
     system("cls");

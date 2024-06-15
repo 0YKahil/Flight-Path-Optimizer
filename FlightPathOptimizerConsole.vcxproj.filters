@@ -51,5 +51,6 @@
       <Filter>Resource Files</Filter>
     </None>
     <None Include=".gitignore" />
+    <None Include="Settings\config.json" />
   </ItemGroup>
 </Project>
