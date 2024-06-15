@@ -64,7 +64,7 @@ void setConsoleColor(WORD color) {
 void printMenu(const std::vector<std::string>& menuItems, int currentSelection) {
     system("cls"); // Clear the console every time menu is printed
 
-    std::cout << BOLD << CYAN << menuItems[0] << RESET << std::endl; // Title printed separately 
+    std::cout << BOLD << CYAN << "\n" << menuItems[0] << RESET << std::endl; // Title printed separately 
     for (int i = 1; i < menuItems.size(); ++i) {  // Display all the menu items
         if (i == currentSelection) {
             setConsoleColor(BACKGROUND_BLUE | BACKGROUND_GREEN | BACKGROUND_RED); // Highlight selected item
@@ -75,6 +75,7 @@ void printMenu(const std::vector<std::string>& menuItems, int currentSelection) 
             std::cout << GREEN << "\n" << menuItems[i] << RESET << std::endl;  // Print the item normally if it is not selected
         }
     }
+    std::cout << BOLD << YELLOW << "\n" << " RANGE: " + std::to_string(THRESHOLD) + "NM | MODE: MODE " + std::to_string(MODE + 1) << RESET << std::endl;
 }
 
 // Executes the find path action and Prompts the user for starting and destination codes then outputs the best path
@@ -343,7 +344,6 @@ int main() {
 
     config.write("user.range", std::to_string(THRESHOLD));
     std::cout << "\nRange saved to config.json." << std::endl;
-
 
     std::vector<std::string> menuItems = {
         " Flight Path Optimizer (use arrow keys for selection) ",
