@@ -18,6 +18,7 @@
 #include <mutex>
 #include "Airport.h"
 #include "Edge.h"
+#include "utility_functions.h"
 #include "json.hpp" 
 
 typedef std::pair<int, int> iPair;
@@ -110,6 +111,24 @@ class Graph {
         // returns true if airport code is valid (in the airport graph); false otherwise
         bool isValidAirport(const std::string& code) const;
         
+        // returns an unordered map with keys of airport icao codes that are in this graph, and their corresponding names as the values
+        std::unordered_map<std::string, std::string> getAirportCodeNames() const;
+
+        /**
+         * Returns the name of the airport corresponding to the provided code; or N/A if the code is not found
+         *
+         * @param code The code of interest in the ICAO format
+         */
+        std::string getAirportNameByCode(const std::string code) const;
+
+        /**
+         * Takes a substring of an airport's name (e.g. Ottawa inter)
+         * and returns the list of the airports containing the phrase in the form of a string (ICAO : Name)
+         *
+         * @param substr The substring of the airport name
+         */
+        std::vector<std::string> searchAirportCodeByName(const std::string substr) const;
+
     private:
         size_t numVertices; // The current number of vertices in the graph.
         std::vector<std::list<Edge>> adjList; // the adjacency list containing the edges.

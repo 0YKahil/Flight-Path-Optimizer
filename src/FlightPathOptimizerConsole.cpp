@@ -27,7 +27,7 @@ int THRESHOLD = 0;
 int MODE = 0;
 
 // Config will contain all the persisting settings set by the user
-Config config("Settings", "config.json"); // Initialize config.json or Open it
+Config config("settings", "config.json"); // Initialize config.json or Open it
 
 std::string dataFilepath = "./datasets/airports.json";
 std::string fetchScriptpath = "./scripts/fetchAirportData.py";
