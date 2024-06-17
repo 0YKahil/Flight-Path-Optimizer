@@ -441,3 +441,47 @@ bool Graph::isValidAirport(const std::string& code) const {
         return false;
     }
 }
+
+std::unordered_map<std::string, std::string> Graph::getAirportCodeNames() const {
+    std::unordered_map<std::string, std::string> map = {}; // Initialize empty map
+    // We want to get all the airports in the graph
+    std::vector<Airport> airports = this->getAirports();
+
+    // for each airport, add to the map {airport.id, airport.name}
+    for (auto airport : airports) {
+        map.insert({airport.id, airport.name});
+    }
+
+    return map;
+}
+
+std::string Graph::getAirportNameByCode(const std::string code) const {
+    std::unordered_map<std::string, std::string> airports_map = this->getAirportCodeNames();
+    auto it = airports_map.find(code);
+    if (it != airports_map.end()) {
+        return it->first + ": " + it->second;
+    } else {
+        return code + " NOT FOUND";
+    }
+
+}
+
+std::vector<std::string> Graph::searchAirportCodeByName(const std::string phrase) const {
+    std::unordered_map<std::string, std::string> airports_map = this->getAirportCodeNames();
+    std::vector<std::string> matching_airports = {}; // Initialize the matching airports with the airports found so far
+
+    // Convert all phrases to upper case
+    std::string upperPhrase = toUpperCase(phrase);
+
+    for (auto it = airports_map.begin(); it != airports_map.end(); ++it) {
+        // Convert the airport name to uppercase
+        std::string upperValue = toUpperCase(it->second);
+        size_t found = upperValue.find(upperPhrase);
+        if (found != std::string::npos) {
+            matching_airports.push_back(it->first + ": " + it->second);
+        }
+    }
+
+    return matching_airports;
+}
+

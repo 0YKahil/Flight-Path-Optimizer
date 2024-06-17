@@ -52,6 +52,19 @@ int main() {
     g.toDOT("./dot_files/airports.dot");
 
 
+
+
+    // std::unordered_map<std::string, std::string> aps = g.getAirportCodeNames();
+    // for (auto it=aps.begin(); it != aps.end(); it++) {
+    //     std::cout << it->first << ": " << it->second << std::endl;
+    // }
+
+    std::vector<std::string> found = g.searchAirportCodeByName("ott");
+    for (std::string ap : found) {
+        std::cout << ap << std::endl;
+    }
+
+
     // g.printGraph();
 
     // std::vector<Airport> airports = g.getAirports();
@@ -70,7 +83,7 @@ int main() {
     // MAIN LOOP
     while (true) {
 
-        std::cout << YELLOW << "\n\nEnter the FULL identifier code for the STARTING airport (e.g. CYOW not YOW) (or 'exit' to quit): \n> " << RESET;
+        std::cout << YELLOW << "\n\nEnter the ICAO code for the STARTING airport (e.g. CYOW not YOW) (or 'exit' to quit): \n> " << RESET;
         std::cin >> lstartID;
 
         std::string startID = toUpperCase(lstartID);
@@ -82,7 +95,7 @@ int main() {
             continue;
         }
 
-        std::cout << YELLOW << "Enter the FULL identifier code for the DESTINATION airport: \n> " << RESET;
+        std::cout << YELLOW << "Enter the ICAO code for the DESTINATION airport: \n> " << RESET;
         std::cin >> ldestID;
         std::string destID = toUpperCase(ldestID);
         if (destID == "EXIT") break;
