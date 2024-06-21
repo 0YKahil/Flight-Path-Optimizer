@@ -316,10 +316,15 @@ void searchAction() {
     std::getline(std::cin >> std::ws, phrase);
 
     std::vector<std::string> matching_airports = getAirportsFromPhrase(airports_map, phrase);
-
-    for (auto& airport : matching_airports) {
-        std::cout << airport << std::endl;
+    if (matching_airports.size() > 0) {
+        for (auto& airport : matching_airports) {
+            std::cout << airport << std::endl;
+        }
     }
+    else {
+        std::cout << "No Results Matching '" << RED << phrase << RESET << "'" << std::endl;
+    }
+
 }
 
 
