@@ -313,9 +313,9 @@ void searchAction() {
     system("cls");
     std::string phrase;
     std::cout << GREEN << "Enter the name or part of the name of the desired airport \n> " << RESET;
-    std::cin >> phrase;
+    std::getline(std::cin >> std::ws, phrase);
 
-    std::vector matching_airports = getAirportsFromPhrase(airports_map, phrase);
+    std::vector<std::string> matching_airports = getAirportsFromPhrase(airports_map, phrase);
 
     for (auto& airport : matching_airports) {
         std::cout << airport << std::endl;

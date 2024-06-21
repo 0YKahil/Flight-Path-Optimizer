@@ -9,9 +9,11 @@
 #include <string>
 #include <fstream>
 #include <iostream>
+#include <sstream>
 #include <limits>
 #include <chrono>
 #include <windows.h>
+#include <algorithm>
 #include <conio.h>
 #include "../include/json.hpp"
 #include "../include/Graph.h"
@@ -118,4 +120,10 @@ std::unordered_map<std::string, std::string> createAirportMapFromJson(const json
 
 // Takes a map with icao codes as the keys and airport names as the values, and a phrase; 
 // returns a list with any airports containing that phrase, in the format 'icao : airport_name'.
-std::vector<std::string> getAirportsFromPhrase(std::unordered_map<std::string, std::string> airports_map, std::string phrase);
+std::vector<std::string> getAirportsFromPhrase(const std::unordered_map<std::string, std::string>& airports_map, const std::string& phrase);
+
+// Splits the inputed string phrase into key words to be used in the airport search.
+std::vector<std::string> splitPhraseIntoKeywords(const std::string& phrase);
+
+// returns true if the given string contains all the keywords in keywords list; false otherwise.
+bool containsAllKeywords(const std::string& str, const std::vector<std::string>& keywords);

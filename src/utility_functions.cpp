@@ -216,17 +216,32 @@ std::unordered_map<std::string, std::string> createAirportMapFromJson(const json
     return airportMap;
 }
 
-std::vector<std::string> getAirportsFromPhrase(std::unordered_map<std::string, std::string> airports_map, std::string phrase) {
-    std::vector<std::string> matching_airports = {}; // Initialize the matching airports as airports found so far
+std::vector<std::string> splitPhraseIntoKeywords(const std::string& phrase) {
+    std::vector<std::string> keywords;
+    std::istringstream stream(phrase);
+    std::string word;
+    while (stream >> word) {
+        keywords.push_back(toUpperCase(word));
+    }
+    return keywords;
+}
 
-    // Convert all phrases to upper case
-    std::string upperPhrase = toUpperCase(phrase);
+bool containsAllKeywords(const std::string& str, const std::vector<std::string>& keywords) {
+    for (const auto& keyword : keywords) {
+        if (str.find(keyword) == std::string::npos) {
+            return false;
+        }
+    }
+    return true;
+}
+
+std::vector<std::string> getAirportsFromPhrase(const std::unordered_map<std::string, std::string>& airports_map, const std::string& phrase) {
+    std::vector<std::string> matching_airports;
+    std::vector<std::string> keywords = splitPhraseIntoKeywords(phrase); // Split the phrase into keywords
 
     for (auto it = airports_map.begin(); it != airports_map.end(); ++it) {
-        // Convert the airport name to uppercase
-        std::string upperValue = toUpperCase(it->second);
-        size_t found = upperValue.find(upperPhrase);
-        if (found != std::string::npos) {
+        std::string upperValue = toUpperCase(it->second); // Convert the airport name to uppercase
+        if (containsAllKeywords(upperValue, keywords)) { // Check if all keywords are present
             matching_airports.push_back(it->first + ": " + it->second);
         }
     }
