@@ -9,7 +9,6 @@
 #include "../include/Graph.h"
 #include "../include/utility_functions.h"
 
-
  /**
   * THRESHOLD will control the cutoff for the edge creation for the graph
   * and dictate when an edge will be made (distance between both locations <= THRESHOLD).
@@ -31,6 +30,12 @@ Config config("settings", "config.json"); // Initialize config.json or Open it
 
 std::string dataFilepath = "./datasets/airports.json";
 std::string fetchScriptpath = "./scripts/fetchAirportData.py";
+
+// This will hold our list of all airports with their corresponding codes
+json j = parseJSON(dataFilepath);
+
+std::unordered_map<std::string, std::string> airports_map = createAirportMapFromJson(j);
+
 
 // Initializes config values
 void initConfig() {
@@ -303,27 +308,39 @@ void configureMenu() {
     }
 }
 
+// Opens the search airport screen an commences the search action
+void searchAction() {
+    system("cls");
+    std::string phrase;
+    std::cout << GREEN << "Enter the name or part of the name of the desired airport \n> " << RESET;
+    std::cin >> phrase;
+
+    std::vector matching_airports = getAirportsFromPhrase(airports_map, phrase);
+
+    for (auto& airport : matching_airports) {
+        std::cout << airport << std::endl;
+    }
+}
+
+
 /**
  * Performs an action based on the selected menu item and confirms return to menu after it is done.
  * If configuration menu case is done executing, skips the confirmation.
  */
 void menuAction(int selection) {
-
     system("cls"); // Clear the console screen
     switch (selection) {
     case 1:
         findPathAction(0);
         break;
     case 2:
-        std::cout << "Searching for an airport ..." << std::endl;  // Placeholder to search for an airport by its code or name
+        searchAction();
         break;
     case 3:
         std::cout << "Rerunning the fetch script ..." << std::endl;  // Placeholder to re fetch the airport data from the API
         break;
     case 4:
         configureMenu();
-        std::cout << "Configuring ..." << std::endl;  // Placeholder to configure the print mode for printshortestpath
-        return; // Skip confirmation
     case 5:
         std::cout << "Exiting..." << std::endl;  // Print exit message
         exit(0);  // Exit the program
@@ -338,8 +355,8 @@ void menuAction(int selection) {
 int main() {
     // Initialize our config file if it doesn't exist or load its information if it does
     initConfig();
-
     runScript(dataFilepath);
+    std::cout << "HERE\n";
     THRESHOLD = promptRange(config); // Ask for aircraft Range
 
     config.write("user.range", std::to_string(THRESHOLD));

@@ -4,7 +4,7 @@
  * 
  * Implementation of the utility functions
  */
-#include "../include/utility_functions.h"
+#include "../include/utility_functions.h"   
 
 namespace fs = std::filesystem;
 
@@ -194,3 +194,42 @@ int promptRange(Config config) {
     return toInteger(input);
 }
 
+
+json parseJSON(const std::string& filename) {
+    std::ifstream file(filename);
+    json j;
+    file >> j;
+    return j;
+}
+
+
+
+std::unordered_map<std::string, std::string> createAirportMapFromJson(const json& j) {
+    std::unordered_map<std::string, std::string> airportMap;
+
+    for (const auto& item : j) {
+        std::string id = item["ident"];
+        std::string name = item["name"];
+        airportMap[id] = name;
+    }
+
+    return airportMap;
+}
+
+std::vector<std::string> getAirportsFromPhrase(std::unordered_map<std::string, std::string> airports_map, std::string phrase) {
+    std::vector<std::string> matching_airports = {}; // Initialize the matching airports as airports found so far
+
+    // Convert all phrases to upper case
+    std::string upperPhrase = toUpperCase(phrase);
+
+    for (auto it = airports_map.begin(); it != airports_map.end(); ++it) {
+        // Convert the airport name to uppercase
+        std::string upperValue = toUpperCase(it->second);
+        size_t found = upperValue.find(upperPhrase);
+        if (found != std::string::npos) {
+            matching_airports.push_back(it->first + ": " + it->second);
+        }
+    }
+
+    return matching_airports;
+}

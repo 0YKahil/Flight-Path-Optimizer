@@ -14,6 +14,9 @@
 #include <windows.h>
 #include <conio.h>
 #include "../include/json.hpp"
+#include "../include/Graph.h"
+
+using json = nlohmann::json;
 
  // Config is a simple class to create and parse config files for persistence of configuration
 class Config {
@@ -106,3 +109,13 @@ std::string toUpperCase(std::string str);
  * @param config Config file that is being written to and from
  */
 int promptRange(Config config);
+
+// Parse a json file and return it
+json parseJSON(const std::string& filename);
+
+// Takes a json file containing airport data and creates an airport map of the names and corresponding icao ids
+std::unordered_map<std::string, std::string> createAirportMapFromJson(const json& j);
+
+// Takes a map with icao codes as the keys and airport names as the values, and a phrase; 
+// returns a list with any airports containing that phrase, in the format 'icao : airport_name'.
+std::vector<std::string> getAirportsFromPhrase(std::unordered_map<std::string, std::string> airports_map, std::string phrase);
