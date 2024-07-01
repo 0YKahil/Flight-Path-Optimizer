@@ -45,7 +45,7 @@ using the Haversine formula https://en.wikipedia.org/wiki/Haversine_formula
 - **For source code version compiling**
     - Python3.X
     - Cmake3.10+
-    - C++ compiler (GNU was used for this project but others should work if configured).
+    - C++ compiler (GNU g++ was used for this project but others should work if configured).
 
 ## Usage
 ### **NON-UI Source Code Version (Usage through console/terminal)**
