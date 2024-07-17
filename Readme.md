@@ -68,7 +68,20 @@ It is **not recommended** to use this version if you do not know what you are do
 
 
 ### **Non-Graphic UI version**
-- To be added
+This version is how I intended for the program to look, similar to aerospace equipment ui and simple but functional
+1. Download the latest FlightPathOrganizerConsoleUI zip file from the release and unzip it into the desired directory, you should have the main exe and a folder containing the fetch script
+2. Run the FlightPathOptimizer.exe for the first time and it should automatically fetch the latest airport data from OurAirports.
+   ![image](https://github.com/user-attachments/assets/fc47db42-7367-4f4a-a87c-0d149d58e7b3)
+3. You should now be greeted with a ui which you can control the selection using your **arrow keys** and confirm your selections with **enter**
+    ![image](https://github.com/user-attachments/assets/1463952d-b5de-4749-a146-f11e77d623cc)
+5. Navigate to **Plan Optimal Route** and similar to before, (for the first time running, input your aircrafts' range) input the icao of your source and destination airports
+    ![image](https://github.com/user-attachments/assets/23c36acc-23e8-4865-87eb-6057a19d3a0e)
+7. Press enter and you will recieve the approximate best route possible for your given range
+   ![image](https://github.com/user-attachments/assets/6f0d52f6-a67b-4bef-9c2d-33e44ac832a0)
+
+   
+
+
 
 ### **Graphic UI version**
 - To be added
