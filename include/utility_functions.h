@@ -68,6 +68,10 @@ bool fileExists(const std::string& filename);
  */
 void askRunScript(const std::string& scriptPath, const std::string& jsonFilePath);
 
+// Runs the script if the file is not found automatically
+void runScript(const std::string& jsonFilePath);
+
+
 /**
  * Simple Yes no prompt that asks the user a yes no question.
  * Return true if yes was answered; false otherwise.
@@ -90,19 +94,3 @@ std::string toUpperCase(std::string str);
  * and returns it if it is valid
  */
 int promptRange();
-
-/**
- * Saves a specific item to the file path ini file with the given key and value
- * e.g. userRange = 50
- * 
- * @param filepath file path to the ini file.
- * @param key The key associated with the item being saved (e.g. "userRange")
- * @param value The value being saved to that specific key
- */
-template <typename T>
-void writeToIni(const std::string& filepath, const std::string& key, const T value);
-
-/**
- * Loads the data from the ini 
- */
-void loadIni(const std::string& filepath, std::vector<int> items);
