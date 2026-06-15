@@ -130,6 +130,9 @@ class Graph {
 
 
     private:
+        std::vector<int> reconstructPath(int last, const std::vector<int>& prev) const;
+        std::pair<std::vector<int>, double> findShortestPathImpl(const Airport& start, const Airport& destination, bool minimizeHops);
+
         size_t numVertices; // The current number of vertices in the graph.
         std::vector<std::list<Edge>> adjList; // the adjacency list containing the edges.
         std::vector<Airport> vertices; // The vertices (airports) in the graph.
