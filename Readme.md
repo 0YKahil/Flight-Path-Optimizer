@@ -16,7 +16,7 @@ For example, while the max range is 650nm, a realistic range for the Cesna 172 i
 
 ## Features
 
-- Fetches Airport location data from OurAirports api
+- Fetches Airport location data from OurAirports database
 - Parses and filters data using a python script to only include
 small, medium, and large airports (no heliports or seaports) and restrict to region of choice
 - Calculates the circle distance between all the pairs of airports
