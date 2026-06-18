@@ -51,29 +51,10 @@ int main() {
     // Creating visual dot file of graph found in ./dot_files/
     g.toDOT("./dot_files/airports.dot");
 
-
-
-
-    // std::unordered_map<std::string, std::string> aps = g.getAirportCodeNames();
-    // for (auto it=aps.begin(); it != aps.end(); it++) {
-    //     std::cout << it->first << ": " << it->second << std::endl;
-    // }
-
     std::vector<std::string> found = g.searchAirportCodeByName("ott");
     for (std::string ap : found) {
         std::cout << ap << std::endl;
     }
-
-
-    // g.printGraph();
-
-    // std::vector<Airport> airports = g.getAirports();
-
-    // std::cout << "\n\nAirport IDs available: \n";
-    // for (auto ap : airports) {
-    //     std::cout << ap.id << ", ";
-    // }
-
 
     // Allow user to input through the console
 

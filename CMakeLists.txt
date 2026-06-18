@@ -1,10 +1,18 @@
 cmake_minimum_required(VERSION 3.10)
+
+if(CMAKE_SOURCE_DIR STREQUAL CMAKE_BINARY_DIR)
+    message(FATAL_ERROR "In-source builds are disabled. Use: cmake -S . -B build")
+endif()
+
 project(MyProject)
 
 set(CMAKE_CXX_STANDARD 17)
+find_package(cpprestsdk REQUIRED)
+find_package(OpenSSL REQUIRED)
 
 # Add include directories
 include_directories(${CMAKE_SOURCE_DIR}/include)
+
 
 # Source files for different executables
 set(edgetests
@@ -21,6 +29,7 @@ set(airporttests
 set(graphtests
     ${CMAKE_SOURCE_DIR}/src/Airport.cpp
     ${CMAKE_SOURCE_DIR}/src/Graph.cpp
+    ${CMAKE_SOURCE_DIR}/src/utility_functions.cpp
     ${CMAKE_SOURCE_DIR}/tests/graphTest.cpp
     ${CMAKE_SOURCE_DIR}/tests/test_main.cpp
 )
@@ -38,9 +47,26 @@ set(main
     ${CMAKE_SOURCE_DIR}/src/FlightPathOptimizer.cpp
 )
 
+set(api_service
+    ${CMAKE_SOURCE_DIR}/src/api_service.cpp
+    ${CMAKE_SOURCE_DIR}/src/Airport.cpp
+    ${CMAKE_SOURCE_DIR}/src/Graph.cpp
+    ${CMAKE_SOURCE_DIR}/src/utility_functions.cpp
+)
+
 # Add executables
 # add_executable(edgeTest ${edgetests})
 # add_executable(airportTest ${airporttests})
-# add_executable(graphTest ${graphtests})
+add_executable(graphTest ${graphtests})
 add_executable(flightPathOptimizer ${main})
 add_executable(utilityTest ${utilitytests})
+
+add_executable(api_service
+    ${api_service}
+)
+
+target_link_libraries(api_service PRIVATE
+    cpprestsdk::cpprest
+    OpenSSL::SSL
+    OpenSSL::Crypto
+)

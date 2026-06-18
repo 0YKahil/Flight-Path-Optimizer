@@ -306,6 +306,34 @@ void Graph::printShortestPath(const std::string startID, const std::string destI
     }
 }
 
+std::pair<std::vector<std::string>, double> Graph::getShortestPath(const std::string startID, const std::string destID, int mode) {
+    if (!isValidAirport(startID) || !isValidAirport(destID)) {
+        return {};
+    }
+
+    Airport startAirport = vertices[airportToIndex.at(startID)];
+    Airport destAirport = vertices[airportToIndex.at(destID)];
+    std::pair<std::vector<int>, double> res = findShortestPath(startAirport, destAirport);
+
+    if (res.first.empty()) {
+        return {};
+    }
+
+    std::vector<std::string> path;
+    path.reserve(res.first.size());
+
+    for (int i = res.first.size() - 1; i >= 0; i--) {
+        const Airport& airport = vertices[res.first[i]];
+        if (mode == 1) {
+            path.push_back(airport.name);
+        } else {
+            path.push_back(airport.id);
+        }
+    }
+
+    return {path, res.second};
+}
+
 void Graph::toDOT(const std::string& filename) const {
     std::ofstream file(filename);
     file << "graph G {\n";
@@ -376,4 +404,3 @@ std::vector<std::string> Graph::searchAirportCodeByName(const std::string phrase
 
     return matching_airports;
 }
-

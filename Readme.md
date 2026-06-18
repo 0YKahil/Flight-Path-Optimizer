@@ -49,14 +49,37 @@ using the Haversine formula https://en.wikipedia.org/wiki/Haversine_formula
     - C++ compiler (GNU g++ was used for this project but others should work if configured).
 
 ## Usage
+### **API service with Docker**
+1. Build and run the API:
+   ```bash
+   docker compose up --build
+   ```
+2. Test the API from another terminal:
+   ```bash
+   curl http://localhost:8080/health
+   ```
+   Route requests can provide their own aircraft range:
+   ```bash
+   curl "http://localhost:8080/route?start=CYOW&dest=CYYZ&range=500"
+   ```
+3. Stop it with `Ctrl+C`.
+
+The API listens on port `8080`.
+
 ### **NON-UI Source Code Version (Usage through console/terminal)**
 It is **not recommended** to use this version if you do not know what you are doing as it is mainly run using a terminal or command prompt (need GNUWin32 on windows)
 1. Clone the repository into the desired directory
 
-2. Navigate to the directory and enter "cmake ." into your command prompt or terminal to automatically configure the project based on the premade CMakeLists.txt.
+2. Navigate to the directory and configure the project:
+   ```bash
+   cmake --preset debug
+   ```
 
-3. After configuration is complete, some new files should be in the directory, **verify that "Makefile" is in the directory**, then enter the command 'make' (without the quotations) into your terminal
-4. Run the program using "./flightPathOptimizer" and proceed with the instructions"
+3. Build the console program:
+   ```bash
+   cmake --build --preset debug --target flightPathOptimizer
+   ```
+4. Run the program using `./build/flightPathOptimizer` and proceed with the instructions.
 
 5. Allow the fetching script to run automatically to create the data file, then **enter the range of your aircraft after flight conditions considerations**.
 

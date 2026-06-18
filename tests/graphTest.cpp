@@ -189,3 +189,50 @@ TEST_CASE("find and print Shortest path from start to end on generated graph (MU
                             "KCLE -> KIAG -> CYOW";
     REQUIRE(output.str() == expected);
 }
+
+TEST_CASE("getShortestPath returns airport ids from start to destination") {
+    std::ifstream file("./datasets/testairports_multi.json");
+    nlohmann::json jsonData;
+    file >> jsonData;
+
+    Graph g(jsonData.size());
+    g.generateAirportGraph(jsonData, 250, false);
+
+    std::pair<std::vector<std::string>, double> result = g.getShortestPath("KCLE", "CYOW");
+
+    std::vector<std::string> expectedPath = {"KCLE", "KIAG", "CYOW"};
+    REQUIRE(result.first == expectedPath);
+    REQUIRE(result.second == 357);
+}
+
+TEST_CASE("getShortestPath can return airport names") {
+    std::ifstream file("./datasets/testairports_multi.json");
+    nlohmann::json jsonData;
+    file >> jsonData;
+
+    Graph g(jsonData.size());
+    g.generateAirportGraph(jsonData, 250, false);
+
+    std::pair<std::vector<std::string>, double> result = g.getShortestPath("CYYZ", "KIAG", 1);
+
+    std::vector<std::string> expectedPath = {
+        "Lester B. Pearson International Airport",
+        "Niagara Falls International Airport"
+    };
+    REQUIRE(result.first == expectedPath);
+    REQUIRE(result.second == 45);
+}
+
+TEST_CASE("getShortestPath returns empty path when no route exists") {
+    std::ifstream file("./datasets/testairports_multi.json");
+    nlohmann::json jsonData;
+    file >> jsonData;
+
+    Graph g(jsonData.size());
+    g.generateAirportGraph(jsonData, 100, false);
+
+    std::pair<std::vector<std::string>, double> result = g.getShortestPath("CYYZ", "CYOW");
+
+    REQUIRE(result.first.empty());
+    REQUIRE(result.second == 0);
+}

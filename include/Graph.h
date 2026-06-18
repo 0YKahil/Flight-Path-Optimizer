@@ -101,6 +101,15 @@ class Graph {
         void printShortestPath(const std::string startID, const std::string destID, int mode = 0);
         void printShortestPath(const std::string startID, const std::string destID, std::ostream& os); // ostream version for testing purposes
 
+        /**
+         * Returns the shortest path from startID to destID in start-to-destination order.
+         *
+         * @param startID The id of the starting Airport (e.g. CYYZ, CYOW)
+         * @param destID The id of the destination Airport
+         * @param mode 0 returns airport ids, 1 returns airport names; otherwise defaults to ids
+         */
+        std::pair<std::vector<std::string>, double> getShortestPath(const std::string startID, const std::string destID, int mode = 0);
+
         // Creates a dot diagram to be used with graphviz for visualizing the graphs
         void toDOT(const std::string& filename) const;
 
