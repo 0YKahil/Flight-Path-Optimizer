@@ -66,6 +66,7 @@ set(api_service
     ${CMAKE_SOURCE_DIR}/src/Airport.cpp
     ${CMAKE_SOURCE_DIR}/src/Graph.cpp
     ${CMAKE_SOURCE_DIR}/src/utility_functions.cpp
+    ${CMAKE_SOURCE_DIR}/src/Logger.cpp
 )
 
 # Add executables
