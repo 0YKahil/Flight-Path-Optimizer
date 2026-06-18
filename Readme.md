@@ -5,6 +5,12 @@ Flight Path Optimizer calculates the shortest route for a limited plane's range 
 
 This Project was made **with the advising of a Licensed Pilot** and the routes are tested to be the most optimal routes without unnecessary stops. It will take into account compromising slightly extra distance, for a few less landings for pilot convenience.
 
+## Examples
+
+![Frontend route planner](img/FrontendA.png)
+
+![Frontend route result](img/FrontendB.png)
+
 
 This project uses a modifiable **Threshold** ([see here](#Threshold)) when creating paths representing **the realistic range of the aircraft** to remove any unreachable paths.
 
