@@ -23,3 +23,8 @@ dot_files/airports.dot
 dot_files/airports.dot
 *.dot
 api_service
+
+# Frontend files
+node_modules
+frontend/node_modules
+frontend/dist

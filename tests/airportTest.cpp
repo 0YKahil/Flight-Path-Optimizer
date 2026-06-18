@@ -5,7 +5,7 @@
  * Tests for Airport class
  */
 #include <iostream>
-#include "catch.hpp"
+#include <catch2/catch.hpp>
 #include "Airport.h"
 
 double yowLat = 45.3225;

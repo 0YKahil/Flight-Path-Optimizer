@@ -19,7 +19,7 @@
 #include "utility_functions.h"
 #include "Airport.h"
 #include "Edge.h"
-#include "../external/json.hpp" 
+#include <nlohmann/json.hpp>
 
 typedef std::pair<int, int> iPair;
 

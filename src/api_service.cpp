@@ -32,6 +32,26 @@ void handleShutdownSignal(int) {
     running = false;
 }
 
+void addCorsHeaders(http_headers& headers) {
+    headers.add(U("Access-Control-Allow-Origin"), U("*"));
+    headers.add(U("Access-Control-Allow-Methods"), U("GET, PUT, OPTIONS"));
+    headers.add(U("Access-Control-Allow-Headers"), U("Content-Type"));
+}
+
+void sendJson(http_request request, status_code status, const json::value& body) {
+    http_response response(status);
+    response.headers().set_content_type(U("application/json"));
+    addCorsHeaders(response.headers());
+    response.set_body(body);
+    request.reply(response);
+}
+
+void handleOptions(http_request request) {
+    http_response response(status_codes::OK);
+    addCorsHeaders(response.headers());
+    request.reply(response);
+}
+
 std::shared_ptr<Graph> getGraphForRange(int rangeNm) {
     {
         std::lock_guard<std::mutex> lock(graphCacheMutex);
@@ -57,7 +77,7 @@ void handleHealth(http_request request) {
     json::value response;
     response[U("status")] = json::value::string(U("ok"));
 
-    request.reply(status_codes::OK, response);        
+    sendJson(request, status_codes::OK, response);
 }
 
 /**
@@ -68,7 +88,7 @@ void handleGetConfig(http_request request) {
     json::value response;
     response[U("aircraftRangeNm")] = json::value::number(aircraftRangeNm.load());
 
-    request.reply(status_codes::OK, response);
+    sendJson(request, status_codes::OK, response);
 }
 
 
@@ -88,20 +108,20 @@ void handleSetRange(http_request request) {
             int rangeInt = std::stoi(utility::conversions::to_utf8string(range));
             if (rangeInt <= 0) {
                 response[U("error")] = json::value::string(U("range must be greater than 0"));
-                request.reply(status_codes::BadRequest, response);
+                sendJson(request, status_codes::BadRequest, response);
                 return;
             }
 
             aircraftRangeNm.store(rangeInt);
             response[U("aircraftRangeNm")] = json::value::number(aircraftRangeNm.load());
-            request.reply(status_codes::OK, response);
+            sendJson(request, status_codes::OK, response);
         } catch (const std::exception&) {
             response[U("error")] = json::value::string(U("invalid range value"));
-            request.reply(status_codes::BadRequest, response);
+            sendJson(request, status_codes::BadRequest, response);
         }
     } else {
         response[U("error")] = json::value::string(U("missing range parameter"));
-        request.reply(status_codes::BadRequest, response);
+        sendJson(request, status_codes::BadRequest, response);
     }
 }
 
@@ -147,11 +167,11 @@ void handleAirportSearch(http_request request) {
 
     } else {
         response[U("error")] = json::value::string(U("missing search parameter"));
-        request.reply(status_codes::BadRequest, response);
+        sendJson(request, status_codes::BadRequest, response);
         return;
     }
 
-    request.reply(status_codes::OK, response);
+    sendJson(request, status_codes::OK, response);
 }
 
 /**
@@ -172,14 +192,14 @@ void handleAirportDetail(http_request request) {
             response[U("longitude")] = json::value::string(utility::conversions::to_string_t((std::string) airport["longitude"]));
             response[U("continent")] = json::value::string(utility::conversions::to_string_t((std::string) airport["continent"]));
 
-            request.reply(status_codes::OK, response);
+            sendJson(request, status_codes::OK, response);
             return;
         }
     }
     
     response[U("message")] = json::value::string(U(code + " Not found in dataset"));
 
-    request.reply(status_codes::NotFound, response);
+    sendJson(request, status_codes::NotFound, response);
 }
 
 /**
@@ -205,7 +225,7 @@ void handleRoute(http_request request) {
             mode = std::stoi(utility::conversions::to_utf8string(modeParam->second));
         } catch (const std::exception&) {
             response[U("error")] = json::value::string(U("invalid mode parameter"));
-            request.reply(status_codes::BadRequest, response);
+            sendJson(request, status_codes::BadRequest, response);
             return;
         }
     }
@@ -215,12 +235,12 @@ void handleRoute(http_request request) {
             routeRangeNm = std::stoi(utility::conversions::to_utf8string(rangeParam->second));
             if (routeRangeNm <= 0) {
                 response[U("error")] = json::value::string(U("range must be greater than 0"));
-                request.reply(status_codes::BadRequest, response);
+                sendJson(request, status_codes::BadRequest, response);
                 return;
             }
         } catch (const std::exception&) {
             response[U("error")] = json::value::string(U("invalid range parameter"));
-            request.reply(status_codes::BadRequest, response);
+            sendJson(request, status_codes::BadRequest, response);
             return;
         }
     }
@@ -229,13 +249,13 @@ void handleRoute(http_request request) {
 
     if (startCode.empty() || !routeGraph->isValidAirport(startCode)) {
         response[U("error")] = json::value::string(U("invalid or missing start parameter"));
-        request.reply(status_codes::BadRequest, response);
+        sendJson(request, status_codes::BadRequest, response);
         return;
     }
 
     if (destCode.empty() || !routeGraph->isValidAirport(destCode)) {
         response[U("error")] = json::value::string(U("invalid or missing destination parameter"));
-        request.reply(status_codes::BadRequest, response);
+        sendJson(request, status_codes::BadRequest, response);
         return;
     }
 
@@ -243,7 +263,7 @@ void handleRoute(http_request request) {
 
     if (res.first.empty()) {
         response[U("error")] = json::value::string(U("no reachable path found"));
-        request.reply(status_codes::NotFound, response);
+        sendJson(request, status_codes::NotFound, response);
         return;
     }
 
@@ -257,7 +277,7 @@ void handleRoute(http_request request) {
         response[U("path")][i] = json::value::string(utility::conversions::to_string_t(res.first[i]));
     }
 
-    request.reply(status_codes::OK, response);
+    sendJson(request, status_codes::OK, response);
 }
 
 void handleGet(http_request request) {
@@ -282,7 +302,7 @@ void handleGet(http_request request) {
         json::value response;
         response[U("error")] = json::value::string(U("endpoint not found"));
 
-        request.reply(status_codes::NotFound, response);
+        sendJson(request, status_codes::NotFound, response);
     }
 }
 
@@ -295,7 +315,7 @@ void handlePut(http_request request) {
     else {
         json::value response;
         response[U("error")] = json::value::string(U("endpoint not found"));
-        request.reply(status_codes::NotFound, response);
+        sendJson(request, status_codes::NotFound, response);
     }
 }
 
@@ -325,6 +345,7 @@ int main() {
 
     listener.support(methods::GET, handleGet);
     listener.support(methods::PUT, handlePut);
+    listener.support(methods::OPTIONS, handleOptions);
     try {
         listener.open().wait();
     } catch (const std::exception& e) {

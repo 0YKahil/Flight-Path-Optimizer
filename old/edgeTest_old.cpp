@@ -5,7 +5,7 @@
  * Tests for Edge class
  */
 #define CATCH_CONFIG_MAIN
-#include "catch.hpp"
+#include <catch2/catch.hpp>
 #include "../old/Edge_old.h"
 
 

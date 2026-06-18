@@ -6,7 +6,7 @@
  */
 #include <fstream>
 #include <iostream>
-#include "catch.hpp"
+#include <catch2/catch.hpp>
 #include "Graph.h"
 #include "Airport.h"
 

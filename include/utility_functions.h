@@ -11,7 +11,7 @@
 #include <cstdlib>
 #include <fstream>
 #include <limits>
-#include "../external/json.hpp"
+#include <nlohmann/json.hpp>
 
 // Config is a simple class to create and parse config files for persistence of configuration
 class Config {

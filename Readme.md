@@ -47,14 +47,19 @@ using the Haversine formula https://en.wikipedia.org/wiki/Haversine_formula
     - Python3.X
     - Cmake3.10+
     - C++ compiler (GNU g++ was used for this project but others should work if configured).
+    - Network access during the first CMake configure so Catch2 and nlohmann/json can be downloaded.
 
 ## Usage
 ### **API service with Docker**
-1. Build and run the API:
+1. Build and run the app:
    ```bash
    docker compose up --build
    ```
-2. Test the API from another terminal:
+2. Open the frontend:
+   ```text
+   http://localhost:5173
+   ```
+3. Test the API from another terminal:
    ```bash
    curl http://localhost:8080/health
    ```
@@ -62,9 +67,9 @@ using the Haversine formula https://en.wikipedia.org/wiki/Haversine_formula
    ```bash
    curl "http://localhost:8080/route?start=CYOW&dest=CYYZ&range=500"
    ```
-3. Stop it with `Ctrl+C`.
+4. Stop it with `Ctrl+C`.
 
-The API listens on port `8080`.
+The API listens on port `8080`, and the React frontend listens on port `5173`.
 
 ### **NON-UI Source Code Version (Usage through console/terminal)**
 It is **not recommended** to use this version if you do not know what you are doing as it is mainly run using a terminal or command prompt (need GNUWin32 on windows)

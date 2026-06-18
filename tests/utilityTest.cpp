@@ -5,7 +5,7 @@
  * Tests for utility functions and Config class
  */
 #include <iostream>
-#include "catch.hpp"
+#include <catch2/catch.hpp>
 #include "utility_functions.h"
 
 TEST_CASE("Test isInteger") {
