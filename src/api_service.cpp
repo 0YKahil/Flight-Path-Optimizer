@@ -14,6 +14,7 @@
 #include <unordered_map>
 #include "utility_functions.h"
 #include "Graph.h"
+#include "Logger.h"
 
 using namespace web;
 using namespace web::http;
@@ -32,6 +33,13 @@ void handleShutdownSignal(int) {
     running = false;
 }
 
+void logRequest(const http_request& request, status_code status) {
+    std::string method = utility::conversions::to_utf8string(request.method());
+    std::string uri = utility::conversions::to_utf8string(request.request_uri().to_string());
+
+    Logger::info(method + " " + uri + " -> " + std::to_string(status));
+}
+
 void addCorsHeaders(http_headers& headers) {
     headers.add(U("Access-Control-Allow-Origin"), U("*"));
     headers.add(U("Access-Control-Allow-Methods"), U("GET, PUT, OPTIONS"));
@@ -43,12 +51,14 @@ void sendJson(http_request request, status_code status, const json::value& body)
     response.headers().set_content_type(U("application/json"));
     addCorsHeaders(response.headers());
     response.set_body(body);
+    logRequest(request, status);
     request.reply(response);
 }
 
 void handleOptions(http_request request) {
     http_response response(status_codes::OK);
     addCorsHeaders(response.headers());
+    logRequest(request, status_codes::OK);
     request.reply(response);
 }
 
@@ -57,15 +67,22 @@ std::shared_ptr<Graph> getGraphForRange(int rangeNm) {
         std::lock_guard<std::mutex> lock(graphCacheMutex);
         auto it = graphCache.find(rangeNm);
         if (it != graphCache.end()) {
+            Logger::debug("Graph cache hit for range " + std::to_string(rangeNm) + "nm");
             return it->second;
         }
     }
 
+    Logger::info("Building graph for range " + std::to_string(rangeNm) + "nm");
     std::shared_ptr<Graph> graph = std::make_shared<Graph>(airportsData.size());
     graph->generateAirportGraph(airportsData, rangeNm, false);
 
     std::lock_guard<std::mutex> lock(graphCacheMutex);
     auto [it, inserted] = graphCache.insert({rangeNm, graph});
+    if (inserted) {
+        Logger::info("Cached graph for range " + std::to_string(rangeNm) + "nm");
+    } else {
+        Logger::debug("Graph cache hit for range " + std::to_string(rangeNm) + "nm after build");
+    }
     return it->second;
 }
 
@@ -332,12 +349,13 @@ int main() {
     // read airports data from airports.json
     try {
         if (!file.is_open()) {
-            std::cerr << "Error: Could not open airports dataset" << std::endl;
+            Logger::error("Could not open airports dataset");
             return 1;
         }
         file >> airportsData;
+        Logger::info("Loaded " + std::to_string(airportsData.size()) + " airports");
     } catch (const std::exception& e) {
-        std::cerr << "Error: Failed to parse airports dataset: " << e.what() << std::endl;
+        Logger::error("Failed to parse airports dataset: " + std::string(e.what()));
         return 1;
     }
 
@@ -348,8 +366,9 @@ int main() {
     listener.support(methods::OPTIONS, handleOptions);
     try {
         listener.open().wait();
+        Logger::info("API listener started on http://0.0.0.0:" + std::to_string(PORT));
     } catch (const std::exception& e) {
-        std::cerr << "Error: Failed to start API listener: " << e.what() << std::endl;
+        Logger::error("Failed to start API listener: " + std::string(e.what()));
         return 1;
     }
 
@@ -369,8 +388,9 @@ int main() {
 
     try {
         listener.close().wait();
+        Logger::info("API listener stopped");
     } catch (const std::exception& e) {
-        std::cerr << "Error: Failed to close API listener: " << e.what() << std::endl;
+        Logger::error("Failed to close API listener: " + std::string(e.what()));
         return 1;
     }
     return 0;
